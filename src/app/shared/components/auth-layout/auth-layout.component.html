@@ -1,0 +1,18 @@
+<div class="auth-shell">
+  <header class="auth-topbar">
+    <span class="brand">{{ 'app_title' | translate }}</span>
+    <div class="controls">
+      <button type="button" class="control-btn" (click)="toggleLanguage()">
+        {{ languageLabel() | translate }}
+      </button>
+      <button type="button" class="control-btn" (click)="toggleTheme()">
+        {{ themeLabel() | translate }}
+      </button>
+    </div>
+  </header>
+  <main class="auth-main">
+    <section class="auth-card">
+      <ng-content></ng-content>
+    </section>
+  </main>
+</div>
