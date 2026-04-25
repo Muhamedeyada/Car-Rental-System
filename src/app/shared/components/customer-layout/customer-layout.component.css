@@ -11,21 +11,35 @@
   justify-content: space-between;
   padding: 0 4rem;
   height: 90px;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--color-surface);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.customer-brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 8px rgba(255, 95, 5, 0.3));
 }
 
 .customer-brand {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 900;
   text-transform: uppercase;
   font-style: italic;
-  color: #fff;
+  color: var(--color-text-primary);
   letter-spacing: -0.05em;
 }
 

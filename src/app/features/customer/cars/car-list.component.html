@@ -28,11 +28,17 @@
     <div class="card-grid">
       @for (car of carList!.data; track car.id) {
         <a [routerLink]="['/cars', car.id]" class="car-card">
-          @if (car.image_url) {
-            <img [src]="car.image_url" [alt]="car.brand + ' ' + car.model" style="width:100%;height:160px;object-fit:cover;" />
-          } @else {
-            <div class="car-card-placeholder">🚗</div>
-          }
+          <div class="car-card-img-wrapper">
+            @if (car.image_url) {
+              <img [src]="car.image_url" [alt]="car.brand + ' ' + car.model" />
+            } @else {
+              <div class="car-placeholder-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                </svg>
+              </div>
+            }
+          </div>
           <div class="car-card-body">
             <p class="car-card-title">{{ car.name }}</p>
             <p class="car-card-subtitle">{{ car.brand }} {{ car.model }}</p>
@@ -47,12 +53,12 @@
         </a>
       }
     </div>
-    <div class="pagination-bar" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);">
-      <span>{{ 'table_page' | translate }} {{ carList!.current_page }} {{ 'table_of' | translate }} {{ carList!.last_page }}</span>
+    <div class="pagination-bar">
+      <span class="pagination-info">{{ 'table_page' | translate }} {{ carList!.current_page }} / {{ carList!.last_page }}</span>
       <div class="pagination-controls">
-        <button class="btn-secondary btn-sm" [disabled]="carList!.current_page === 1"
+        <button class="pagination-btn" [disabled]="carList!.current_page === 1"
           (click)="changePage(carList!.current_page - 1)">‹</button>
-        <button class="btn-secondary btn-sm" [disabled]="carList!.current_page === carList!.last_page"
+        <button class="pagination-btn" [disabled]="carList!.current_page === carList!.last_page"
           (click)="changePage(carList!.current_page + 1)">›</button>
       </div>
     </div>

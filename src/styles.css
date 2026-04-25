@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Automotive Luxury Palette - Carbon & Flame */
-  --color-bg: #0a0a0a;
-  --color-surface: #141414;
-  --color-surface-raised: #1c1c1c;
-  --color-border: #262626;
+  /* Light Mode - Ivory Gallery */
+  --color-bg: #fdfdfd;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f9f9f9;
+  --color-border: #e5e5e5;
   --color-primary: #ff5f05; /* Racing Orange */
-  --color-primary-hover: #ff7d33;
-  --color-primary-soft: rgba(255, 95, 5, 0.1);
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a3a3a3;
-  --color-success: #22c55e;
-  --color-danger: #ef4444;
-  --color-warning: #f59e0b;
+  --color-primary-hover: #e65200;
+  --color-primary-soft: rgba(255, 95, 5, 0.08);
+  --color-text-primary: #121212;
+  --color-text-secondary: #737373;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #ea580c;
   
   --font-heading: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -24,14 +24,23 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.7);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.8);
-  --shadow-glow: 0 0 20px rgba(255, 95, 5, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 24px rgba(0,0,0,0.08);
+  --shadow-glow: 0 0 15px rgba(255, 95, 5, 0.15);
 }
 
 html.dark {
-  /* Dark is default in this theme */
+  /* Dark Mode - Midnight Carbon */
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-raised: #1c1c1c;
+  --color-border: #262626;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a3a3;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.7);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.8);
 }
 
 *, *::before, *::after {
@@ -46,6 +55,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -85,7 +95,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Buttons */
 .btn-primary {
   background-color: var(--color-primary);
-  color: #000;
+  color: #fff;
   border: none;
   padding: 0.875rem 1.75rem;
   border-radius: var(--radius-sm);
@@ -97,6 +107,11 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+}
+
+html:not(.dark) .btn-primary {
+  color: #fff;
 }
 
 .btn-primary:hover {
@@ -119,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-border);
+  background-color: var(--color-surface-raised);
   border-color: var(--color-text-secondary);
 }
 
@@ -139,6 +154,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   text-decoration: none;
   color: inherit;
+  box-shadow: var(--shadow-md);
 }
 
 .car-card::after {
@@ -155,22 +171,55 @@ h1, h2, h3, h4, h5, h6 {
 .car-card:hover {
   transform: translateY(-8px);
   background-color: var(--color-surface-raised);
+  box-shadow: var(--shadow-lg);
 }
 
 .car-card:hover::after {
   opacity: 0.5;
 }
 
-.car-card img {
+.car-card-img-wrapper {
   width: 100%;
   height: 200px;
+  background-color: var(--color-surface-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.car-placeholder-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface), var(--color-surface-raised));
+}
+
+.car-placeholder-icon svg {
+  width: 120px;
+  height: 120px;
+  color: var(--color-primary);
+  opacity: 0.8;
+  filter: drop-shadow(0 0 12px rgba(255, 95, 5, 0.2));
+  transition: all 0.3s ease;
+}
+
+.car-card:hover .car-placeholder-icon svg {
+  transform: scale(1.1) rotate(-2deg);
+  opacity: 1;
+}
+
+.car-card img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  filter: grayscale(20%);
-  transition: filter 0.3s;
+  transition: transform 0.5s ease;
 }
 
 .car-card:hover img {
-  filter: grayscale(0%);
+  transform: scale(1.05);
 }
 
 .car-card-body {
@@ -227,7 +276,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .data-table th {
-  background-color: #1a1a1a;
+  background-color: var(--color-surface-raised);
   color: var(--color-text-secondary);
   text-align: left;
   padding: 1.25rem 1.5rem;
@@ -235,6 +284,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .data-table td {
@@ -244,7 +294,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .data-table tr:hover td {
-  background-color: #1c1c1c;
+  background-color: var(--color-surface-raised);
 }
 
 /* Form Styling */
@@ -264,13 +314,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .form-input {
   width: 100%;
-  background-color: #000;
+  background-color: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xs);
   padding: 0.875rem 1rem;
-  color: #fff;
+  color: var(--color-text-primary);
   font-family: inherit;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 
 .form-input:focus {
@@ -289,10 +339,10 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-xs);
 }
 
-.badge-success { background: #064e3b; color: #34d399; }
-.badge-danger { background: #450a0a; color: #f87171; }
-.badge-warning { background: #451a03; color: #fbbf24; }
-.badge-secondary { background: #262626; color: #a3a3a3; }
+.badge-success { background: var(--color-primary-soft); color: var(--color-success); border: 1px solid var(--color-success); }
+.badge-danger { background: rgba(220, 38, 38, 0.1); color: var(--color-danger); border: 1px solid var(--color-danger); }
+.badge-warning { background: rgba(234, 88, 12, 0.1); color: var(--color-warning); border: 1px solid var(--color-warning); }
+.badge-secondary { background: var(--color-surface-raised); color: var(--color-text-secondary); border: 1px solid var(--color-border); }
 
 /* Filter Bar */
 .filters-bar {
@@ -308,15 +358,117 @@ h1, h2, h3, h4, h5, h6 {
 
 .filter-input {
   flex: 1;
-  background-color: #000;
+  background-color: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xs);
   padding: 0.75rem;
-  color: #fff;
+  color: var(--color-text-primary);
   font-size: 0.875rem;
 }
 
-/* Detail Page */
+/* Pagination Bar */
+.pagination-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.pagination-info {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pagination-btn {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  transform: translateY(-4px) skewX(-5deg);
+  box-shadow: var(--shadow-glow);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* Action Buttons */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 0.5rem;
+}
+
+.btn-icon:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-icon-edit {
+  color: var(--color-primary);
+}
+
+.btn-icon-edit:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-icon-delete {
+  color: var(--color-danger);
+}
+
+.btn-icon-delete:hover {
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Detail Page Extensions */
 .detail-card {
   background-color: var(--color-surface);
   padding: 2.5rem;

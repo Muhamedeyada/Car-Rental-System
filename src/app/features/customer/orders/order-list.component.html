@@ -48,11 +48,11 @@
         </tbody>
       </table>
       <div class="pagination-bar">
-        <span>{{ 'table_page' | translate }} {{ orderList!.current_page }} {{ 'table_of' | translate }} {{ orderList!.last_page }}</span>
+        <span class="pagination-info">{{ 'table_page' | translate }} {{ orderList!.current_page }} / {{ orderList!.last_page }}</span>
         <div class="pagination-controls">
-          <button class="btn-secondary btn-sm" [disabled]="orderList!.current_page === 1"
+          <button class="pagination-btn" [disabled]="orderList!.current_page === 1"
             (click)="changePage(orderList!.current_page - 1)">‹</button>
-          <button class="btn-secondary btn-sm" [disabled]="orderList!.current_page === orderList!.last_page"
+          <button class="pagination-btn" [disabled]="orderList!.current_page === orderList!.last_page"
             (click)="changePage(orderList!.current_page + 1)">›</button>
         </div>
       </div>

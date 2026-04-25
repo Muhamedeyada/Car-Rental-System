@@ -53,11 +53,11 @@
         </tbody>
       </table>
       <div class="pagination-bar">
-        <span>{{ 'table_page' | translate }} {{ installmentList!.current_page }} {{ 'table_of' | translate }} {{ installmentList!.last_page }}</span>
+        <span class="pagination-info">{{ 'table_page' | translate }} {{ installmentList!.current_page }} / {{ installmentList!.last_page }}</span>
         <div class="pagination-controls">
-          <button class="btn-secondary btn-sm" [disabled]="installmentList!.current_page === 1"
+          <button class="pagination-btn" [disabled]="installmentList!.current_page === 1"
             (click)="changePage(installmentList!.current_page - 1)">‹</button>
-          <button class="btn-secondary btn-sm" [disabled]="installmentList!.current_page === installmentList!.last_page"
+          <button class="pagination-btn" [disabled]="installmentList!.current_page === installmentList!.last_page"
             (click)="changePage(installmentList!.current_page + 1)">›</button>
         </div>
       </div>
