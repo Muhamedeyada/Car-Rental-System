@@ -29,6 +29,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   isFormSubmitting = false;
   showDeleteConfirm = false;
   userToDelete: IUser | null = null;
+  showPassword = false;
   userForm: FormGroup;
   private subscriptions = new Subscription();
 
@@ -178,6 +179,10 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   changePage(page: number): void {
     this.currentPage = page;
     this.fetchUsers();
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   get nameControl() { return this.userForm.get('name'); }

@@ -119,6 +119,8 @@
   "installment_paid_success": "Installment paid successfully.",
   "order_installments_title": "Installments",
   "car_image_url": "Image URL",
+  "car_name": "Car Name",
+  "car_kilometers": "Kilometers",
   "car_transmission_automatic": "Automatic",
   "car_transmission_manual": "Manual",
   "car_fuel_petrol": "Petrol",

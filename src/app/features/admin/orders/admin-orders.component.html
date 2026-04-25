@@ -13,9 +13,8 @@
     </select>
     <select class="filter-input" [formControl]="paymentStatusFilter">
       <option value="">{{ 'order_payment_status' | translate }}</option>
-      <option value="paid">{{ 'order_status_paid' | translate }}</option>
-      <option value="unpaid">{{ 'order_status_unpaid' | translate }}</option>
-      <option value="partial">{{ 'order_status_partial' | translate }}</option>
+      <option value="success">{{ 'order_status_paid' | translate }}</option>
+      <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
     </select>
     <select class="filter-input" [formControl]="orderTypeFilter">
       <option value="">{{ 'order_order_type' | translate }}</option>
@@ -120,9 +119,8 @@
         <div class="form-field">
           <label class="form-label">{{ 'order_payment_status' | translate }}</label>
           <select class="form-input" [formControl]="newPaymentStatus">
-            <option value="paid">{{ 'order_status_paid' | translate }}</option>
-            <option value="unpaid">{{ 'order_status_unpaid' | translate }}</option>
-            <option value="partial">{{ 'order_status_partial' | translate }}</option>
+            <option value="success">{{ 'order_status_paid' | translate }}</option>
+            <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
           </select>
         </div>
         <div class="modal-footer">

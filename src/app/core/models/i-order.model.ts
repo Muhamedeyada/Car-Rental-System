@@ -13,7 +13,7 @@ export interface IOrder {
   days: number;
   total_price: string | number;
   payment_type: 'cash' | 'visa' | 'tamara';
-  payment_status: 'paid' | 'unpaid' | 'partial';
+  payment_status: 'success' | 'pending' | 'failed';
   order_type: 'full' | 'installments';
   installments?: IInstallment[];
   created_at: string;

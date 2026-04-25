@@ -123,8 +123,15 @@
               {{ 'auth_password' | translate }}
               @if (modalMode === 'edit') { <span style="color:var(--color-text-secondary);font-weight:400;"> (optional)</span> }
             </label>
-            <input type="password" formControlName="password" class="form-input"
-              [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched" autocomplete="new-password" />
+            <div class="password-input-wrapper" style="position: relative;">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
+                [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched" autocomplete="new-password"
+                style="padding-right: 2.5rem;" />
+              <button type="button" class="password-toggle-btn" (click)="togglePassword()"
+                style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 0; font-size: 1.25rem; display: flex; align-items: center; justify-content: center;">
+                {{ showPassword ? '👁️' : '🙈' }}
+              </button>
+            </div>
             @if (passwordControl?.touched && passwordControl?.errors) {
               <p class="form-error">
                 @if (passwordControl?.errors?.['server']) { {{ passwordControl?.errors?.['server'] }} }
@@ -135,9 +142,15 @@
           </div>
           <div class="form-field">
             <label class="form-label">{{ 'auth_confirm_password' | translate }}</label>
-            <input type="password" formControlName="password_confirmation" class="form-input"
-              [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
-              autocomplete="new-password" />
+            <div class="password-input-wrapper" style="position: relative;">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password_confirmation" class="form-input"
+                [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
+                autocomplete="new-password" style="padding-right: 2.5rem;" />
+              <button type="button" class="password-toggle-btn" (click)="togglePassword()"
+                style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 0; font-size: 1.25rem; display: flex; align-items: center; justify-content: center;">
+                {{ showPassword ? '👁️' : '🙈' }}
+              </button>
+            </div>
             @if (passwordConfirmationControl?.touched && passwordConfirmationControl?.errors) {
               <p class="form-error">
                 @if (passwordConfirmationControl?.errors?.['server']) { {{ passwordConfirmationControl?.errors?.['server'] }} }

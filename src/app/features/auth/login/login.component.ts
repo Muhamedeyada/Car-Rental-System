@@ -17,6 +17,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   isSubmitting = false;
   submitErrorKey: string | null = null;
+  showPassword = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -35,6 +36,10 @@ export class LoginComponent {
 
   get passwordControl() {
     return this.loginForm.get('password');
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   submitLogin(): void {

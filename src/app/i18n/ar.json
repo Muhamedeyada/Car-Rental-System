@@ -119,6 +119,8 @@
   "installment_paid_success": "تم دفع القسط بنجاح.",
   "order_installments_title": "الأقساط",
   "car_image_url": "رابط الصورة",
+  "car_name": "اسم السيارة",
+  "car_kilometers": "كيلومترات",
   "car_transmission_automatic": "أوتوماتيك",
   "car_transmission_manual": "يدوي",
   "car_fuel_petrol": "بنزين",

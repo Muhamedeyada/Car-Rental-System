@@ -1,8 +1,10 @@
 export interface ICar {
   id: number;
+  name: string;
   brand: string;
   model: string;
   year: number;
+  kilometers: number;
   price_per_day: string | number;
   color: string;
   seats: number;
@@ -15,9 +17,11 @@ export interface ICar {
 }
 
 export interface ICarRequest {
+  name: string;
   brand: string;
   model: string;
   year: number;
+  kilometers: number;
   price_per_day: number;
   color: string;
   seats: number;
