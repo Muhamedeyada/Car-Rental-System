@@ -891,32 +891,64 @@ html[lang="ar"] .form-label {
 }
 
 .modal-footer {
-  padding: 2rem 3rem;
+  padding: 1.5rem 3rem;
   border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 1.25rem;
-  background: linear-gradient(to top, var(--color-surface-raised), var(--color-surface));
+  background: var(--color-surface);
   position: sticky;
   bottom: 0;
   z-index: 10;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
 }
 
 .modal-footer .btn-primary,
 .modal-footer .btn-secondary {
-  min-width: 120px;
+  min-width: 130px;
+  height: 48px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-}
-  
-[dir="rtl"] .modal-footer {
-  flex-direction: row-reverse;
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.modal-footer .btn-primary, 
-.modal-footer .btn-secondary, 
-.modal-footer .btn-danger {
-  padding: 0.75rem 2rem;
-  min-width: 120px;
+.modal-footer .btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 95, 5, 0.2);
+}
+
+.modal-footer .btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 95, 5, 0.3);
+  background: #e55504;
+}
+
+.modal-footer .btn-secondary {
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.modal-footer .btn-secondary:hover:not(:disabled) {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-secondary);
+  transform: translateY(-2px);
+}
+
+[dir="rtl"] .modal-footer {
+  flex-direction: row-reverse;
 }
 
 /* Detail Grid within Modals */

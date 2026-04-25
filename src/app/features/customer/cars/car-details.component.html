@@ -46,42 +46,69 @@
       }
 
       <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" novalidate>
-        <div class="detail-grid" style="margin-bottom:0;">
+        <div class="form-grid" style="margin-bottom: 2rem;">
           <div class="form-field">
             <label class="form-label">{{ 'order_start_date' | translate }}</label>
-            <input type="date" formControlName="delivery_date" class="form-input" [min]="todayDate"
-              [class.is-invalid]="!!deliveryDateControl?.invalid && !!deliveryDateControl?.touched" />
+            <div class="input-with-icon">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <input type="date" formControlName="delivery_date" class="form-input" [min]="todayDate"
+                [class.is-invalid]="!!deliveryDateControl?.invalid && !!deliveryDateControl?.touched" />
+            </div>
             @if (deliveryDateControl?.touched && deliveryDateControl?.errors?.['required']) {
-              <p class="form-error">{{ 'validation_required' | translate }}</p>
+              <p class="form-error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                {{ 'validation_required' | translate }}
+              </p>
             }
           </div>
+
           <div class="form-field">
             <label class="form-label">{{ 'order_end_date' | translate }}</label>
-            <input type="date" formControlName="receiving_date" class="form-input" [min]="todayDate"
-              [class.is-invalid]="!!receivingDateControl?.invalid && !!receivingDateControl?.touched" />
+            <div class="input-with-icon">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <input type="date" formControlName="receiving_date" class="form-input" [min]="todayDate"
+                [class.is-invalid]="!!receivingDateControl?.invalid && !!receivingDateControl?.touched" />
+            </div>
             @if (receivingDateControl?.touched && receivingDateControl?.errors?.['required']) {
-              <p class="form-error">{{ 'validation_required' | translate }}</p>
+              <p class="form-error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                {{ 'validation_required' | translate }}
+              </p>
             }
           </div>
+
           <div class="form-field">
             <label class="form-label">{{ 'order_payment_type' | translate }}</label>
-            <select formControlName="payment_type" class="form-input">
-              <option value="cash">{{ 'order_payment_cash' | translate }}</option>
-              <option value="visa">{{ 'order_payment_visa' | translate }}</option>
-              <option value="tamara">{{ 'order_payment_tamara' | translate }}</option>
-            </select>
+            <div class="input-with-icon">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              <select formControlName="payment_type" class="form-input">
+                <option value="cash">{{ 'order_payment_cash' | translate }}</option>
+                <option value="visa">{{ 'order_payment_visa' | translate }}</option>
+                <option value="tamara">{{ 'order_payment_tamara' | translate }}</option>
+              </select>
+            </div>
           </div>
+
           <div class="form-field">
             <label class="form-label">{{ 'order_order_type' | translate }}</label>
-            <select formControlName="order_type" class="form-input">
-              <option value="full">{{ 'order_type_full' | translate }}</option>
-              <option value="installments">{{ 'order_type_installments' | translate }}</option>
-            </select>
+            <div class="input-with-icon">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <select formControlName="order_type" class="form-input">
+                <option value="full">{{ 'order_type_full' | translate }}</option>
+                <option value="installments">{{ 'order_type_installments' | translate }}</option>
+              </select>
+            </div>
           </div>
         </div>
-        <button type="submit" class="btn-primary" style="margin-top:1rem;"
+        
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"
           [disabled]="orderForm.invalid || isSubmitting">
-          @if (isSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'order_create_title' | translate }} }
+          @if (isSubmitting) { 
+            <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3"></circle></svg>
+            {{ 'action_loading' | translate }} 
+          } @else { 
+            {{ 'order_create_title' | translate }} 
+          }
         </button>
       </form>
     </div>
