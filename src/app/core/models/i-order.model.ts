@@ -8,10 +8,11 @@ export interface IOrder {
   car_id: number;
   user?: IUser;
   car?: ICar;
-  start_date: string;
-  end_date: string;
+  delivery_date: string;
+  receiving_date: string;
   days: number;
   total_price: string | number;
+  points: number;
   payment_type: 'cash' | 'visa' | 'tamara';
   payment_status: 'success' | 'pending' | 'failed';
   order_type: 'full' | 'installments';
@@ -22,8 +23,8 @@ export interface IOrder {
 
 export interface IOrderRequest {
   car_id: number;
-  start_date: string;
-  end_date: string;
+  delivery_date: string;
+  receiving_date: string;
   payment_type: 'cash' | 'visa' | 'tamara';
   order_type: 'full' | 'installments';
 }

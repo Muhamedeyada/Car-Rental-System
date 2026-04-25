@@ -1,5 +1,5 @@
 {
-  "app_title": "تأجير السيارات",
+  "app_title": "RentWheels",
   "nav_cars": "السيارات",
   "nav_orders": "الطلبات",
   "nav_installments": "الأقساط",
@@ -65,8 +65,8 @@
   "car_fuel_type": "نوع الوقود",
   "car_available": "متاح",
   "car_unavailable": "غير متاح",
-  "order_start_date": "تاريخ البداية",
-  "order_end_date": "تاريخ النهاية",
+  "order_start_date": "تاريخ الاستلام",
+  "order_end_date": "تاريخ التسليم",
   "order_days": "الأيام",
   "order_total_price": "السعر الإجمالي",
   "order_payment_type": "طريقة الدفع",

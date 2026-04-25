@@ -1,37 +1,39 @@
 :root {
-  --color-bg: #ffffff;
-  --color-surface: #f3f4f6;
-  --color-surface-hover: #e5e7eb;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-border: #e5e7eb;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
+  --color-bg: #f0f5fb;
+  --color-surface: #e8eef6;
+  --color-surface-hover: #dce5f0;
+  --color-text-primary: #0c1b2e;
+  --color-text-secondary: #4f6880;
+  --color-border: #c5d4e8;
+  --color-primary: #1a3c6e;
+  --color-primary-hover: #122c52;
   --color-primary-text: #ffffff;
   --color-danger: #dc2626;
   --color-danger-hover: #b91c1c;
-  --color-success: #16a34a;
-  --color-warning: #d97706;
-  --color-skeleton: #e5e7eb;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-skeleton: #dce5ef;
   --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-arabic: 'Cairo', 'Noto Sans Arabic', system-ui, sans-serif;
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --radius-xl: 1rem;
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.12), 0 2px 6px -2px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 10px 24px -4px rgb(0 0 0 / 0.15), 0 4px 10px -2px rgb(0 0 0 / 0.1);
 }
 
 html.dark {
-  --color-bg: #0f172a;
-  --color-surface: #1e293b;
-  --color-surface-hover: #334155;
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
-  --color-primary: #3b82f6;
-  --color-primary-hover: #60a5fa;
-  --color-skeleton: #334155;
+  --color-bg: #070e1c;
+  --color-surface: #0e1e34;
+  --color-surface-hover: #16293f;
+  --color-text-primary: #dce9f8;
+  --color-text-secondary: #6a92b8;
+  --color-border: #193356;
+  --color-primary: #4080d0;
+  --color-primary-hover: #5c9ae8;
+  --color-skeleton: #16293f;
 }
 
 *,
@@ -300,11 +302,16 @@ textarea {
 
 .data-table th {
   font-weight: 600;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  background-color: var(--color-primary);
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+html.dark .data-table th {
   background-color: var(--color-surface);
   color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .data-table tbody tr:last-child td {
@@ -390,8 +397,8 @@ textarea {
   overflow-y: auto;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   padding: 1.5rem;
 }
 
@@ -470,19 +477,20 @@ textarea {
 }
 
 .car-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
 }
 
 .car-card-placeholder {
   width: 100%;
-  height: 160px;
-  background-color: var(--color-skeleton);
+  height: 180px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, color-mix(in srgb, var(--color-primary) 60%, #000) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  color: var(--color-text-secondary);
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .car-card-body {
@@ -510,8 +518,8 @@ textarea {
 }
 
 .car-card-price {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.0625rem;
+  font-weight: 700;
   color: var(--color-primary);
 }
 

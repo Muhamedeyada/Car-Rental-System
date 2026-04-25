@@ -22,74 +22,62 @@
           style="width:100%;max-height:280px;object-fit:cover;border-radius:var(--radius-md);margin-bottom:1.25rem;" />
       }
       <h1 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem;color:var(--color-text-primary);">
-        {{ car.brand }} {{ car.model }} ({{ car.year }})
+        {{ car.name }}
       </h1>
       <div class="detail-grid">
         <div><p class="detail-item-label">{{ 'car_brand' | translate }}</p><p class="detail-item-value">{{ car.brand }}</p></div>
         <div><p class="detail-item-label">{{ 'car_model' | translate }}</p><p class="detail-item-value">{{ car.model }}</p></div>
-        <div><p class="detail-item-label">{{ 'car_year' | translate }}</p><p class="detail-item-value">{{ car.year }}</p></div>
-        <div><p class="detail-item-label">{{ 'car_color' | translate }}</p><p class="detail-item-value">{{ car.color }}</p></div>
-        <div><p class="detail-item-label">{{ 'car_seats' | translate }}</p><p class="detail-item-value">{{ car.seats }}</p></div>
-        <div><p class="detail-item-label">{{ 'car_transmission' | translate }}</p><p class="detail-item-value">{{ car.transmission }}</p></div>
-        <div><p class="detail-item-label">{{ 'car_fuel_type' | translate }}</p><p class="detail-item-value">{{ car.fuel_type }}</p></div>
-        <div>
-          <p class="detail-item-label">{{ 'car_available' | translate }}</p>
-          <span [class]="car.available ? 'badge badge-success' : 'badge badge-danger'">
-            {{ (car.available ? 'car_available' : 'car_unavailable') | translate }}
-          </span>
-        </div>
+        <div><p class="detail-item-label">{{ 'car_kilometers' | translate }}</p><p class="detail-item-value">{{ car.kilometers }} KM</p></div>
         <div><p class="detail-item-label">{{ 'car_price_per_day' | translate }}</p><p class="detail-item-value" style="color:var(--color-primary);font-size:1.125rem;">{{ car.price_per_day }}</p></div>
       </div>
     </div>
 
-    @if (car.available) {
-      <div class="detail-card">
-        <h2 class="section-title">{{ 'order_create_title' | translate }}</h2>
+    <div class="detail-card">
+      <h2 class="section-title">{{ 'order_create_title' | translate }}</h2>
 
-        @if (submitErrorKey) {
-          <div class="form-summary-error" role="alert">{{ submitErrorKey | translate }}</div>
-        }
+      @if (submitErrorKey) {
+        <div class="form-summary-error" role="alert">{{ submitErrorKey | translate }}</div>
+      }
 
-        <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" novalidate>
-          <div class="detail-grid" style="margin-bottom:0;">
-            <div class="form-field">
-              <label class="form-label">{{ 'order_start_date' | translate }}</label>
-              <input type="date" formControlName="start_date" class="form-input" [min]="todayDate"
-                [class.is-invalid]="!!startDateControl?.invalid && !!startDateControl?.touched" />
-              @if (startDateControl?.touched && startDateControl?.errors?.['required']) {
-                <p class="form-error">{{ 'validation_required' | translate }}</p>
-              }
-            </div>
-            <div class="form-field">
-              <label class="form-label">{{ 'order_end_date' | translate }}</label>
-              <input type="date" formControlName="end_date" class="form-input" [min]="todayDate"
-                [class.is-invalid]="!!endDateControl?.invalid && !!endDateControl?.touched" />
-              @if (endDateControl?.touched && endDateControl?.errors?.['required']) {
-                <p class="form-error">{{ 'validation_required' | translate }}</p>
-              }
-            </div>
-            <div class="form-field">
-              <label class="form-label">{{ 'order_payment_type' | translate }}</label>
-              <select formControlName="payment_type" class="form-input">
-                <option value="cash">{{ 'order_payment_cash' | translate }}</option>
-                <option value="visa">{{ 'order_payment_visa' | translate }}</option>
-                <option value="tamara">{{ 'order_payment_tamara' | translate }}</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label class="form-label">{{ 'order_order_type' | translate }}</label>
-              <select formControlName="order_type" class="form-input">
-                <option value="full">{{ 'order_type_full' | translate }}</option>
-                <option value="installments">{{ 'order_type_installments' | translate }}</option>
-              </select>
-            </div>
+      <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" novalidate>
+        <div class="detail-grid" style="margin-bottom:0;">
+          <div class="form-field">
+            <label class="form-label">{{ 'order_start_date' | translate }}</label>
+            <input type="date" formControlName="delivery_date" class="form-input" [min]="todayDate"
+              [class.is-invalid]="!!deliveryDateControl?.invalid && !!deliveryDateControl?.touched" />
+            @if (deliveryDateControl?.touched && deliveryDateControl?.errors?.['required']) {
+              <p class="form-error">{{ 'validation_required' | translate }}</p>
+            }
           </div>
-          <button type="submit" class="btn-primary" style="margin-top:1rem;"
-            [disabled]="orderForm.invalid || isSubmitting">
-            @if (isSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'order_create_title' | translate }} }
-          </button>
-        </form>
-      </div>
-    }
+          <div class="form-field">
+            <label class="form-label">{{ 'order_end_date' | translate }}</label>
+            <input type="date" formControlName="receiving_date" class="form-input" [min]="todayDate"
+              [class.is-invalid]="!!receivingDateControl?.invalid && !!receivingDateControl?.touched" />
+            @if (receivingDateControl?.touched && receivingDateControl?.errors?.['required']) {
+              <p class="form-error">{{ 'validation_required' | translate }}</p>
+            }
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'order_payment_type' | translate }}</label>
+            <select formControlName="payment_type" class="form-input">
+              <option value="cash">{{ 'order_payment_cash' | translate }}</option>
+              <option value="visa">{{ 'order_payment_visa' | translate }}</option>
+              <option value="tamara">{{ 'order_payment_tamara' | translate }}</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'order_order_type' | translate }}</label>
+            <select formControlName="order_type" class="form-input">
+              <option value="full">{{ 'order_type_full' | translate }}</option>
+              <option value="installments">{{ 'order_type_installments' | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:1rem;"
+          [disabled]="orderForm.invalid || isSubmitting">
+          @if (isSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'order_create_title' | translate }} }
+        </button>
+      </form>
+    </div>
   }
 </app-customer-layout>

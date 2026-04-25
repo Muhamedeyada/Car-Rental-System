@@ -21,15 +21,11 @@
         <thead>
           <tr>
             <th>{{ 'table_id' | translate }}</th>
+            <th>{{ 'car_name' | translate }}</th>
             <th>{{ 'car_brand' | translate }}</th>
             <th>{{ 'car_model' | translate }}</th>
-            <th>{{ 'car_year' | translate }}</th>
-            <th>{{ 'car_color' | translate }}</th>
-            <th>{{ 'car_seats' | translate }}</th>
-            <th>{{ 'car_transmission' | translate }}</th>
-            <th>{{ 'car_fuel_type' | translate }}</th>
+            <th>{{ 'car_kilometers' | translate }}</th>
             <th>{{ 'car_price_per_day' | translate }}</th>
-            <th>{{ 'car_available' | translate }}</th>
             <th>{{ 'table_actions' | translate }}</th>
           </tr>
         </thead>
@@ -37,19 +33,11 @@
           @for (car of carList!.data; track car.id) {
             <tr>
               <td>{{ car.id }}</td>
+              <td>{{ car.name }}</td>
               <td>{{ car.brand }}</td>
               <td>{{ car.model }}</td>
-              <td>{{ car.year }}</td>
-              <td>{{ car.color }}</td>
-              <td>{{ car.seats }}</td>
-              <td>{{ car.transmission }}</td>
-              <td>{{ car.fuel_type }}</td>
+              <td>{{ car.kilometers }}</td>
               <td>{{ car.price_per_day }}</td>
-              <td>
-                <span [class]="car.available ? 'badge badge-success' : 'badge badge-danger'">
-                  {{ (car.available ? 'car_available' : 'car_unavailable') | translate }}
-                </span>
-              </td>
               <td>
                 <div class="table-actions">
                   <button class="btn-icon btn-sm" (click)="openEditModal(car)">{{ 'action_edit' | translate }}</button>
@@ -108,14 +96,6 @@
               </div>
 
               <div class="form-field">
-                <label class="form-label">{{ 'car_year' | translate }}</label>
-                <input type="number" class="form-input" formControlName="year" />
-                @if (yearControl?.invalid && yearControl?.touched) {
-                  <p class="error-text">{{ 'validation_required' | translate }}</p>
-                }
-              </div>
-
-              <div class="form-field">
                 <label class="form-label">{{ 'car_kilometers' | translate }}</label>
                 <input type="number" class="form-input" formControlName="kilometers" />
                 @if (kilometersControl?.invalid && kilometersControl?.touched) {
@@ -128,40 +108,6 @@
                 @if (priceControl?.invalid && priceControl?.touched) {
                   <p class="error-text">{{ 'validation_required' | translate }}</p>
                 }
-              </div>
-              <div class="form-field">
-                <label class="form-label">{{ 'car_color' | translate }}</label>
-                <input type="text" formControlName="color" class="form-input" />
-                @if (colorControl?.invalid && colorControl?.touched) {
-                  <p class="error-text">{{ 'validation_required' | translate }}</p>
-                }
-              </div>
-              <div class="form-field">
-                <label class="form-label">{{ 'car_seats' | translate }}</label>
-                <input type="number" formControlName="seats" class="form-input" />
-                @if (seatsControl?.invalid && seatsControl?.touched) {
-                  <p class="error-text">{{ 'validation_required' | translate }}</p>
-                }
-              </div>
-              <div class="form-field">
-                <label class="form-label">{{ 'car_transmission' | translate }}</label>
-                <select formControlName="transmission" class="form-input">
-                  <option value="automatic">{{ 'car_transmission_automatic' | translate }}</option>
-                  <option value="manual">{{ 'car_transmission_manual' | translate }}</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label class="form-label">{{ 'car_fuel_type' | translate }}</label>
-                <select formControlName="fuel_type" class="form-input">
-                  <option value="petrol">{{ 'car_fuel_petrol' | translate }}</option>
-                  <option value="diesel">{{ 'car_fuel_diesel' | translate }}</option>
-                  <option value="electric">{{ 'car_fuel_electric' | translate }}</option>
-                  <option value="hybrid">{{ 'car_fuel_hybrid' | translate }}</option>
-                </select>
-              </div>
-              <div class="form-field checkbox-field">
-                <input type="checkbox" id="car-available" formControlName="available" />
-                <label for="car-available" class="form-label" style="margin-bottom:0;">{{ 'car_available' | translate }}</label>
               </div>
               <div class="form-field full-width">
                 <label class="form-label">{{ 'car_image_url' | translate }} (optional)</label>

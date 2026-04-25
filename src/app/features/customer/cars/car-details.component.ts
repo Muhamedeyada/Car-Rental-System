@@ -33,8 +33,8 @@ export class CarDetailsComponent implements OnInit {
     private readonly customerOrderService: CustomerOrderService
   ) {
     this.orderForm = this.formBuilder.group({
-      start_date: ['', [Validators.required]],
-      end_date: ['', [Validators.required]],
+      delivery_date: ['', [Validators.required]],
+      receiving_date: ['', [Validators.required]],
       payment_type: ['cash', [Validators.required]],
       order_type: ['full', [Validators.required]],
     });
@@ -61,8 +61,8 @@ export class CarDetailsComponent implements OnInit {
     this.submitErrorKey = null;
     const payload: IOrderRequest = {
       car_id: this.car.id,
-      start_date: this.orderForm.value.start_date,
-      end_date: this.orderForm.value.end_date,
+      delivery_date: this.orderForm.value.delivery_date,
+      receiving_date: this.orderForm.value.receiving_date,
       payment_type: this.orderForm.value.payment_type,
       order_type: this.orderForm.value.order_type,
     };
@@ -80,6 +80,6 @@ export class CarDetailsComponent implements OnInit {
     });
   }
 
-  get startDateControl() { return this.orderForm.get('start_date'); }
-  get endDateControl() { return this.orderForm.get('end_date'); }
+  get deliveryDateControl() { return this.orderForm.get('delivery_date'); }
+  get receivingDateControl() { return this.orderForm.get('receiving_date'); }
 }

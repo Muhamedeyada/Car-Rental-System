@@ -1,5 +1,5 @@
 {
-  "app_title": "Car Rental",
+  "app_title": "RentWheels",
   "nav_cars": "Cars",
   "nav_orders": "Orders",
   "nav_installments": "Installments",
@@ -65,8 +65,8 @@
   "car_fuel_type": "Fuel Type",
   "car_available": "Available",
   "car_unavailable": "Unavailable",
-  "order_start_date": "Start Date",
-  "order_end_date": "End Date",
+  "order_start_date": "Delivery Date",
+  "order_end_date": "Receiving Date",
   "order_days": "Days",
   "order_total_price": "Total Price",
   "order_payment_type": "Payment Type",

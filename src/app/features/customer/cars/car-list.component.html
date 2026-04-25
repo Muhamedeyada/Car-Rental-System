@@ -34,15 +34,10 @@
             <div class="car-card-placeholder">🚗</div>
           }
           <div class="car-card-body">
-            <p class="car-card-title">{{ car.brand }} {{ car.model }}</p>
-            <p class="car-card-subtitle">{{ car.year }} · {{ car.color }}</p>
+            <p class="car-card-title">{{ car.name }}</p>
+            <p class="car-card-subtitle">{{ car.brand }} {{ car.model }}</p>
             <div class="car-card-meta">
-              <span class="badge badge-secondary">{{ car.seats }} seats</span>
-              <span class="badge badge-secondary">{{ car.transmission }}</span>
-              <span class="badge badge-secondary">{{ car.fuel_type }}</span>
-              <span [class]="car.available ? 'badge badge-success' : 'badge badge-danger'">
-                {{ (car.available ? 'car_available' : 'car_unavailable') | translate }}
-              </span>
+              <span class="badge badge-secondary">{{ car.kilometers }} KM</span>
             </div>
             <p class="car-card-price">{{ car.price_per_day }} / {{ 'order_days' | translate }}</p>
           </div>

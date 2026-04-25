@@ -40,14 +40,8 @@ export class AdminCarsComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       brand: ['', [Validators.required]],
       model: ['', [Validators.required]],
-      year: ['', [Validators.required, Validators.min(1990), Validators.max(2030)]],
-      kilometers: ['', [Validators.required, Validators.min(0)]],
-      price_per_day: ['', [Validators.required, Validators.min(1)]],
-      color: ['', [Validators.required]],
-      seats: ['', [Validators.required, Validators.min(1), Validators.max(20)]],
-      transmission: ['automatic', [Validators.required]],
-      fuel_type: ['petrol', [Validators.required]],
-      available: [true],
+      kilometers: [0, [Validators.required, Validators.min(0)]],
+      price_per_day: [0, [Validators.required, Validators.min(0)]],
       image_url: [''],
     });
   }
@@ -98,14 +92,8 @@ export class AdminCarsComponent implements OnInit, OnDestroy {
       name: car.name,
       brand: car.brand,
       model: car.model,
-      year: car.year,
       kilometers: car.kilometers,
       price_per_day: car.price_per_day,
-      color: car.color,
-      seats: car.seats,
-      transmission: car.transmission,
-      fuel_type: car.fuel_type,
-      available: car.available,
       image_url: car.image_url ?? '',
     });
     this.selectedCar = car;
@@ -125,14 +113,8 @@ export class AdminCarsComponent implements OnInit, OnDestroy {
       name: formValue.name,
       brand: formValue.brand,
       model: formValue.model,
-      year: +formValue.year,
       kilometers: +formValue.kilometers,
       price_per_day: +formValue.price_per_day,
-      color: formValue.color,
-      seats: +formValue.seats,
-      transmission: formValue.transmission,
-      fuel_type: formValue.fuel_type,
-      available: formValue.available === true || formValue.available === 'true',
       image_url: formValue.image_url || undefined,
     };
 
@@ -191,9 +173,6 @@ export class AdminCarsComponent implements OnInit, OnDestroy {
   get nameControl() { return this.carForm.get('name'); }
   get brandControl() { return this.carForm.get('brand'); }
   get modelControl() { return this.carForm.get('model'); }
-  get yearControl() { return this.carForm.get('year'); }
   get kilometersControl() { return this.carForm.get('kilometers'); }
   get priceControl() { return this.carForm.get('price_per_day'); }
-  get colorControl() { return this.carForm.get('color'); }
-  get seatsControl() { return this.carForm.get('seats'); }
 }
