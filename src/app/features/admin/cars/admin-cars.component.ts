@@ -166,8 +166,27 @@ export class AdminCarsComponent implements OnInit, OnDestroy {
   }
 
   changePage(page: number): void {
+    if (page < 1 || (this.carList && page > this.carList.last_page)) return;
     this.currentPage = page;
     this.fetchCars();
+  }
+
+  getPageNumbers(): number[] {
+    if (!this.carList) return [];
+    const total = this.carList.last_page;
+    const current = this.carList.current_page;
+    const pages: number[] = [];
+    const maxVisible = 5;
+    
+    let start = Math.max(1, current - Math.floor(maxVisible / 2));
+    let end = Math.min(total, start + maxVisible - 1);
+    
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
   }
 
   get nameControl() { return this.carForm.get('name'); }

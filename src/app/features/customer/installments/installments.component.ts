@@ -57,8 +57,27 @@ export class InstallmentsComponent implements OnInit {
   }
 
   changePage(page: number): void {
+    if (page < 1 || (this.installmentList && page > this.installmentList.last_page)) return;
     this.currentPage = page;
     this.fetchInstallments();
+  }
+
+  getPageNumbers(): number[] {
+    if (!this.installmentList) return [];
+    const total = this.installmentList.last_page;
+    const current = this.installmentList.current_page;
+    const pages: number[] = [];
+    const maxVisible = 5;
+    
+    let start = Math.max(1, current - Math.floor(maxVisible / 2));
+    let end = Math.min(total, start + maxVisible - 1);
+    
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
   }
 
   statusBadgeClass(status: string): string {

@@ -52,6 +52,12 @@
         <div class="pagination-controls">
           <button class="pagination-btn" [disabled]="orderList!.current_page === 1"
             (click)="changePage(orderList!.current_page - 1)">‹</button>
+
+          @for (p of getPageNumbers(); track p) {
+            <button class="pagination-btn" [class.active]="p === orderList!.current_page"
+              (click)="changePage(p)">{{ p }}</button>
+          }
+
           <button class="pagination-btn" [disabled]="orderList!.current_page === orderList!.last_page"
             (click)="changePage(orderList!.current_page + 1)">›</button>
         </div>
