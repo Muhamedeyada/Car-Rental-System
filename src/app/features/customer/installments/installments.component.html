@@ -1,0 +1,64 @@
+<app-customer-layout>
+  <div class="page-header">
+    <h1 class="page-title">{{ 'customer_installments_title' | translate }}</h1>
+  </div>
+
+  <div class="table-wrapper">
+    @if (isLoading) {
+      <div class="skeleton-wrapper">
+        @for (row of [1,2,3,4,5]; track row) { <div class="skeleton-row"></div> }
+      </div>
+    } @else if (!installmentList?.data?.length) {
+      <div class="empty-state">{{ (installmentList ? 'table_no_results' : 'table_no_data') | translate }}</div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>{{ 'table_id' | translate }}</th>
+            <th>{{ 'order_id' | translate }}</th>
+            <th>{{ 'installment_amount' | translate }}</th>
+            <th>{{ 'installment_due_date' | translate }}</th>
+            <th>{{ 'installment_status' | translate }}</th>
+            <th>{{ 'table_actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inst of installmentList!.data; track inst.id) {
+            <tr>
+              <td>{{ inst.id }}</td>
+              <td>#{{ inst.order_id }}</td>
+              <td>{{ inst.amount }}</td>
+              <td>{{ inst.due_date }}</td>
+              <td>
+                <span [class]="inst.status === 'paid' ? 'badge badge-success' : 'badge badge-danger'">
+                  {{ (inst.status === 'paid' ? 'installment_status_paid' : 'installment_status_unpaid') | translate }}
+                </span>
+              </td>
+              <td>
+                @if (inst.status === 'unpaid') {
+                  <button class="btn-primary btn-sm"
+                    [disabled]="payingInstallmentId === inst.id"
+                    (click)="payInstallment(inst)">
+                    @if (payingInstallmentId === inst.id) { {{ 'action_loading' | translate }} }
+                    @else { {{ 'action_pay' | translate }} }
+                  </button>
+                } @else {
+                  <span class="badge badge-success">✓</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="pagination-bar">
+        <span>{{ 'table_page' | translate }} {{ installmentList!.current_page }} {{ 'table_of' | translate }} {{ installmentList!.last_page }}</span>
+        <div class="pagination-controls">
+          <button class="btn-secondary btn-sm" [disabled]="installmentList!.current_page === 1"
+            (click)="changePage(installmentList!.current_page - 1)">‹</button>
+          <button class="btn-secondary btn-sm" [disabled]="installmentList!.current_page === installmentList!.last_page"
+            (click)="changePage(installmentList!.current_page + 1)">›</button>
+        </div>
+      </div>
+    }
+  </div>
+</app-customer-layout>
