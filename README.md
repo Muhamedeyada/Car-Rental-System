@@ -1,59 +1,89 @@
-# Car
+# Car Rental System — Angular Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+A modern, responsive Car Rental System frontend built with Angular, featuring role-based access for Admins and Customers.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Admin Dashboard:** Full CRUD operations for Users, Cars, and Orders.
+- **Customer Portal:** Car browsing, order creation, and installment management.
+- **Role-Based Access Control:** Secure routes with guards for Guests, Admins, and Customers.
+- **Theming:** Full Dark Mode support with persistence.
+- **Localization:** Multi-language support (English & Arabic) with RTL support.
+- **Responsive Design:** Optimized for both desktop and mobile devices.
+- **State Management:** Reactive approach using RxJS.
 
-```bash
-ng serve
+## Project Structure
+
+```
+src/app/
+├── core/                   # Global singletons
+│   ├── interceptors/       # HTTP Interceptors (Auth, Error)
+│   ├── guards/             # Route Guards (Admin, Customer, Guest)
+│   ├── services/           # Core Services (Auth, Theme, Translate)
+│   └── models/             # Shared Interfaces
+├── features/               # Feature-based modules
+│   ├── admin/              # Admin Dashboard features
+│   ├── customer/           # Customer portal features
+│   └── auth/               # Shared Authentication (Login/Register)
+├── shared/                 # Shared UI components & utilities
+│   ├── components/         # Reusable UI (Table, Spinner, Toast)
+│   ├── pipes/              # Custom pipes (Translate)
+│   └── directives/         # Custom directives
+└── i18n/                   # Translation JSON files (EN, AR)
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Setup & Installation
 
-## Code scaffolding
+### Prerequisites
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+- Angular CLI
 
-```bash
-ng generate component component-name
-```
+### Installation
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd car
+   ```
 
-```bash
-ng generate --help
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Building
+3. Run the development server:
+   ```bash
+   npm start
+   ```
+   Navigate to `http://localhost:4200/`.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+### Building for Production
 
 ```bash
-ng e2e
+npm run build
 ```
+The build artifacts will be stored in the `dist/` directory.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Core Implementations
 
-## Additional Resources
+### Dark Mode Toggle
+The `ThemeService` manages the application's visual theme. It toggles a `.dark` class on the `<html>` element and persists the choice in `localStorage`. The application uses CSS Variables (defined in `styles.css` or component styles) to switch colors dynamically based on the presence of the `.dark` class.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Language Switch (i18n)
+The `TranslateService` handles localization. It supports English (LTR) and Arabic (RTL). When the language is switched:
+- The `lang` attribute of `<html>` is updated.
+- The `dir` attribute of `<html>` is updated (`ltr` or `rtl`).
+- The corresponding JSON translation file is loaded.
+- The preference is persisted in `localStorage`.
+
+## Routing & Guards
+
+- **GuestGuard:** Prevents logged-in users from accessing login/register pages.
+- **AdminGuard:** Ensures only users with the `admin` role can access `/admin/**` routes.
+- **CustomerGuard:** Ensures only users with the `customer` role can access customer-specific routes.
+
+## API Integration
+
+The system communicates with a REST API defined in `environment.ts`. An `AuthInterceptor` automatically attaches the Bearer Token to all outgoing requests.
