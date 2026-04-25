@@ -1,0 +1,141 @@
+<app-admin-layout>
+  <div class="page-header">
+    <h1 class="page-title">{{ 'admin_orders_title' | translate }}</h1>
+  </div>
+
+  <div class="filters-bar">
+    <input type="text" class="filter-input" [placeholder]="'action_search' | translate" [formControl]="searchControl" />
+    <select class="filter-input" [formControl]="paymentTypeFilter">
+      <option value="">{{ 'order_payment_type' | translate }}</option>
+      <option value="cash">{{ 'order_payment_cash' | translate }}</option>
+      <option value="visa">{{ 'order_payment_visa' | translate }}</option>
+      <option value="tamara">{{ 'order_payment_tamara' | translate }}</option>
+    </select>
+    <select class="filter-input" [formControl]="paymentStatusFilter">
+      <option value="">{{ 'order_payment_status' | translate }}</option>
+      <option value="paid">{{ 'order_status_paid' | translate }}</option>
+      <option value="unpaid">{{ 'order_status_unpaid' | translate }}</option>
+      <option value="partial">{{ 'order_status_partial' | translate }}</option>
+    </select>
+    <select class="filter-input" [formControl]="orderTypeFilter">
+      <option value="">{{ 'order_order_type' | translate }}</option>
+      <option value="full">{{ 'order_type_full' | translate }}</option>
+      <option value="installments">{{ 'order_type_installments' | translate }}</option>
+    </select>
+  </div>
+
+  <div class="table-wrapper">
+    @if (isLoading) {
+      <div class="skeleton-wrapper">
+        @for (row of [1,2,3,4,5]; track row) { <div class="skeleton-row"></div> }
+      </div>
+    } @else if (!orderList?.data?.length) {
+      <div class="empty-state">{{ (orderList ? 'table_no_results' : 'table_no_data') | translate }}</div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>{{ 'table_id' | translate }}</th>
+            <th>{{ 'order_user' | translate }}</th>
+            <th>{{ 'order_car' | translate }}</th>
+            <th>{{ 'order_start_date' | translate }}</th>
+            <th>{{ 'order_end_date' | translate }}</th>
+            <th>{{ 'order_days' | translate }}</th>
+            <th>{{ 'order_total_price' | translate }}</th>
+            <th>{{ 'order_payment_type' | translate }}</th>
+            <th>{{ 'order_payment_status' | translate }}</th>
+            <th>{{ 'order_order_type' | translate }}</th>
+            <th>{{ 'table_actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of orderList!.data; track order.id) {
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.user?.name ?? order.user_id }}</td>
+              <td>{{ order.car ? order.car.brand + ' ' + order.car.model : order.car_id }}</td>
+              <td>{{ order.start_date }}</td>
+              <td>{{ order.end_date }}</td>
+              <td>{{ order.days }}</td>
+              <td>{{ order.total_price }}</td>
+              <td>{{ order.payment_type }}</td>
+              <td><span [class]="paymentStatusBadgeClass(order.payment_status)">{{ paymentStatusKey(order.payment_status) | translate }}</span></td>
+              <td>{{ (order.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-icon btn-sm" (click)="openViewModal(order)">{{ 'action_view' | translate }}</button>
+                  <button class="btn-icon btn-sm" (click)="openStatusModal(order)">{{ 'action_update' | translate }}</button>
+                  <button class="btn-icon btn-sm" style="color:var(--color-danger);border-color:var(--color-danger);"
+                    (click)="openDeleteConfirm(order)">{{ 'action_delete' | translate }}</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="pagination-bar">
+        <span>{{ 'table_page' | translate }} {{ orderList!.current_page }} {{ 'table_of' | translate }} {{ orderList!.last_page }}</span>
+        <div class="pagination-controls">
+          <button class="btn-secondary btn-sm" [disabled]="orderList!.current_page === 1"
+            (click)="changePage(orderList!.current_page - 1)">‹</button>
+          <button class="btn-secondary btn-sm" [disabled]="orderList!.current_page === orderList!.last_page"
+            (click)="changePage(orderList!.current_page + 1)">›</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (viewedOrder) {
+    <div class="modal-overlay" (click)="closeViewModal()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <span class="modal-title">{{ 'action_view' | translate }} #{{ viewedOrder.id }}</span>
+          <button class="btn-icon" (click)="closeViewModal()">✕</button>
+        </div>
+        <div class="detail-grid">
+          <div><p class="detail-item-label">{{ 'order_user' | translate }}</p><p class="detail-item-value">{{ viewedOrder.user?.name ?? viewedOrder.user_id }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_car' | translate }}</p><p class="detail-item-value">{{ viewedOrder.car ? viewedOrder.car.brand + ' ' + viewedOrder.car.model : viewedOrder.car_id }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.start_date }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.end_date }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_days' | translate }}</p><p class="detail-item-value">{{ viewedOrder.days }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_total_price' | translate }}</p><p class="detail-item-value">{{ viewedOrder.total_price }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_payment_type' | translate }}</p><p class="detail-item-value">{{ viewedOrder.payment_type }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_payment_status' | translate }}</p><p class="detail-item-value"><span [class]="paymentStatusBadgeClass(viewedOrder.payment_status)">{{ paymentStatusKey(viewedOrder.payment_status) | translate }}</span></p></div>
+          <div><p class="detail-item-label">{{ 'order_order_type' | translate }}</p><p class="detail-item-value">{{ (viewedOrder.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</p></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" (click)="closeViewModal()">{{ 'action_close' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (orderForStatusUpdate) {
+    <div class="modal-overlay" (click)="closeStatusModal()">
+      <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <span class="modal-title">{{ 'action_update' | translate }} #{{ orderForStatusUpdate.id }}</span>
+          <button class="btn-icon" (click)="closeStatusModal()">✕</button>
+        </div>
+        <div class="form-field">
+          <label class="form-label">{{ 'order_payment_status' | translate }}</label>
+          <select class="form-input" [formControl]="newPaymentStatus">
+            <option value="paid">{{ 'order_status_paid' | translate }}</option>
+            <option value="unpaid">{{ 'order_status_unpaid' | translate }}</option>
+            <option value="partial">{{ 'order_status_partial' | translate }}</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" (click)="closeStatusModal()">{{ 'action_cancel' | translate }}</button>
+          <button class="btn-primary" [disabled]="isUpdatingStatus" (click)="submitStatusUpdate()">
+            @if (isUpdatingStatus) { {{ 'action_loading' | translate }} } @else { {{ 'action_update' | translate }} }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (showDeleteConfirm) {
+    <app-confirm-dialog (confirmed)="confirmDelete()" (cancelled)="cancelDelete()"></app-confirm-dialog>
+  }
+</app-admin-layout>

@@ -1,0 +1,31 @@
+<div class="customer-shell">
+  <header class="customer-navbar">
+    <span class="customer-brand">{{ 'app_title' | translate }}</span>
+    <nav class="customer-nav">
+      <a routerLink="/cars" routerLinkActive="active" class="customer-nav-link">
+        {{ 'nav_cars' | translate }}
+      </a>
+      <a routerLink="/orders" routerLinkActive="active" class="customer-nav-link">
+        {{ 'nav_orders' | translate }}
+      </a>
+      <a routerLink="/installments" routerLinkActive="active" class="customer-nav-link">
+        {{ 'nav_installments' | translate }}
+      </a>
+    </nav>
+    <div class="customer-controls">
+      <button class="control-btn" (click)="toggleLanguage()">
+        {{ languageLabel() | translate }}
+      </button>
+      <button class="control-btn" (click)="toggleTheme()">
+        {{ themeLabel() | translate }}
+      </button>
+      <button class="control-btn customer-logout-btn" (click)="logout()">
+        {{ 'auth_logout' | translate }}
+      </button>
+    </div>
+  </header>
+  <main class="customer-content">
+    <ng-content></ng-content>
+  </main>
+  <app-toast></app-toast>
+</div>

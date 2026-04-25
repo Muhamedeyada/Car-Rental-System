@@ -1,0 +1,163 @@
+<app-admin-layout>
+  <div class="page-header">
+    <h1 class="page-title">{{ 'admin_users_title' | translate }}</h1>
+    <button class="btn-primary" (click)="openCreateModal()">{{ 'action_create' | translate }}</button>
+  </div>
+
+  <div class="filters-bar">
+    <input type="text" class="filter-input" [placeholder]="'action_search' | translate" [formControl]="searchControl" />
+    <select class="filter-input" [formControl]="roleFilter">
+      <option value="">{{ 'action_filter' | translate }}</option>
+      <option value="admin">{{ 'user_role_admin' | translate }}</option>
+      <option value="customer">{{ 'user_role_customer' | translate }}</option>
+    </select>
+  </div>
+
+  <div class="table-wrapper">
+    @if (isLoading) {
+      <div class="skeleton-wrapper">
+        @for (row of [1,2,3,4,5]; track row) { <div class="skeleton-row"></div> }
+      </div>
+    } @else if (!userList?.data?.length) {
+      <div class="empty-state">{{ (userList ? 'table_no_results' : 'table_no_data') | translate }}</div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>{{ 'table_id' | translate }}</th>
+            <th>{{ 'auth_name' | translate }}</th>
+            <th>{{ 'auth_email' | translate }}</th>
+            <th>{{ 'user_role' | translate }}</th>
+            <th>{{ 'auth_phone' | translate }}</th>
+            <th>{{ 'auth_country' | translate }}</th>
+            <th>{{ 'user_wallet' | translate }}</th>
+            <th>{{ 'table_actions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of userList!.data; track user.id) {
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <span [class]="user.role === 'admin' ? 'badge badge-warning' : 'badge badge-secondary'">
+                  {{ (user.role === 'admin' ? 'user_role_admin' : 'user_role_customer') | translate }}
+                </span>
+              </td>
+              <td>{{ user.phone ?? '—' }}</td>
+              <td>{{ user.country ?? '—' }}</td>
+              <td>{{ user.wallet ?? '—' }}</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-icon btn-sm" (click)="openEditModal(user)">{{ 'action_edit' | translate }}</button>
+                  <button class="btn-icon btn-sm" style="color:var(--color-danger);border-color:var(--color-danger);"
+                    (click)="openDeleteConfirm(user)">{{ 'action_delete' | translate }}</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="pagination-bar">
+        <span>{{ 'table_page' | translate }} {{ userList!.current_page }} {{ 'table_of' | translate }} {{ userList!.last_page }}</span>
+        <div class="pagination-controls">
+          <button class="btn-secondary btn-sm" [disabled]="userList!.current_page === 1"
+            (click)="changePage(userList!.current_page - 1)">‹</button>
+          <button class="btn-secondary btn-sm" [disabled]="userList!.current_page === userList!.last_page"
+            (click)="changePage(userList!.current_page + 1)">›</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (modalMode !== 'none') {
+    <div class="modal-overlay" (click)="closeModal()">
+      <div class="modal-box" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <span class="modal-title">{{ (modalMode === 'create' ? 'action_create' : 'action_edit') | translate }}</span>
+          <button class="btn-icon" (click)="closeModal()">✕</button>
+        </div>
+        <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" novalidate>
+          <div class="form-field">
+            <label class="form-label">{{ 'auth_name' | translate }}</label>
+            <input type="text" formControlName="name" class="form-input"
+              [class.is-invalid]="!!nameControl?.invalid && !!nameControl?.touched" />
+            @if (nameControl?.touched && nameControl?.errors) {
+              <p class="form-error">
+                @if (nameControl?.errors?.['server']) { {{ nameControl?.errors?.['server'] }} }
+                @else if (nameControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
+                @else if (nameControl?.errors?.['minlength']) { {{ 'validation_min_length' | translate }} }
+              </p>
+            }
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'auth_email' | translate }}</label>
+            <input type="email" formControlName="email" class="form-input"
+              [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched" />
+            @if (emailControl?.touched && emailControl?.errors) {
+              <p class="form-error">
+                @if (emailControl?.errors?.['server']) { {{ emailControl?.errors?.['server'] }} }
+                @else if (emailControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
+                @else if (emailControl?.errors?.['email']) { {{ 'validation_email' | translate }} }
+              </p>
+            }
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'user_role' | translate }}</label>
+            <select formControlName="role" class="form-input">
+              <option value="admin">{{ 'user_role_admin' | translate }}</option>
+              <option value="customer">{{ 'user_role_customer' | translate }}</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'auth_phone' | translate }} (optional)</label>
+            <input type="tel" formControlName="phone" class="form-input" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'auth_country' | translate }} (optional)</label>
+            <input type="text" formControlName="country" class="form-input" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">
+              {{ 'auth_password' | translate }}
+              @if (modalMode === 'edit') { <span style="color:var(--color-text-secondary);font-weight:400;"> (optional)</span> }
+            </label>
+            <input type="password" formControlName="password" class="form-input"
+              [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched" autocomplete="new-password" />
+            @if (passwordControl?.touched && passwordControl?.errors) {
+              <p class="form-error">
+                @if (passwordControl?.errors?.['server']) { {{ passwordControl?.errors?.['server'] }} }
+                @else if (passwordControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
+                @else if (passwordControl?.errors?.['minlength']) { {{ 'validation_min_length' | translate }} }
+              </p>
+            }
+          </div>
+          <div class="form-field">
+            <label class="form-label">{{ 'auth_confirm_password' | translate }}</label>
+            <input type="password" formControlName="password_confirmation" class="form-input"
+              [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
+              autocomplete="new-password" />
+            @if (passwordConfirmationControl?.touched && passwordConfirmationControl?.errors) {
+              <p class="form-error">
+                @if (passwordConfirmationControl?.errors?.['server']) { {{ passwordConfirmationControl?.errors?.['server'] }} }
+                @else if (passwordConfirmationControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
+                @else if (passwordConfirmationControl?.errors?.['passwordMismatch']) { {{ 'validation_password_mismatch' | translate }} }
+              </p>
+            }
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" (click)="closeModal()">{{ 'action_cancel' | translate }}</button>
+            <button type="submit" class="btn-primary" [disabled]="userForm.invalid || isFormSubmitting">
+              @if (isFormSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'action_save' | translate }} }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  @if (showDeleteConfirm) {
+    <app-confirm-dialog (confirmed)="confirmDelete()" (cancelled)="cancelDelete()"></app-confirm-dialog>
+  }
+</app-admin-layout>

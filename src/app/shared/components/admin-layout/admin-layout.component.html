@@ -1,0 +1,31 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-logo">{{ 'app_title' | translate }}</div>
+    <nav class="admin-nav">
+      <a routerLink="/admin/users" routerLinkActive="active" class="admin-nav-link">
+        {{ 'nav_users' | translate }}
+      </a>
+      <a routerLink="/admin/cars" routerLinkActive="active" class="admin-nav-link">
+        {{ 'nav_cars' | translate }}
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="active" class="admin-nav-link">
+        {{ 'nav_orders' | translate }}
+      </a>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <button class="admin-control-btn" (click)="toggleLanguage()">
+        {{ languageLabel() | translate }}
+      </button>
+      <button class="admin-control-btn" (click)="toggleTheme()">
+        {{ themeLabel() | translate }}
+      </button>
+      <button class="admin-control-btn admin-logout-btn" (click)="logout()">
+        {{ 'auth_logout' | translate }}
+      </button>
+    </div>
+  </aside>
+  <main class="admin-main">
+    <ng-content></ng-content>
+  </main>
+  <app-toast></app-toast>
+</div>

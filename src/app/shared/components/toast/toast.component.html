@@ -1,0 +1,9 @@
+<div class="toast-container">
+  @for (toast of activeToasts; track toast.id) {
+    <div class="toast-item" [class]="'toast-' + toast.type">
+      <span>{{ toast.message | translate }}</span>
+      <button style="background: transparent; border: none; color: inherit; font-size: 1rem; cursor: pointer; padding: 0;"
+        (click)="dismissToast(toast.id)">✕</button>
+    </div>
+  }
+</div>

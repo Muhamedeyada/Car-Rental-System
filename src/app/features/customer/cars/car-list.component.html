@@ -1,0 +1,62 @@
+<app-customer-layout>
+  <div class="page-header">
+    <h1 class="page-title">{{ 'customer_cars_title' | translate }}</h1>
+  </div>
+
+  <div class="filters-bar">
+    <input type="text" class="filter-input" [placeholder]="'action_search' | translate" [formControl]="searchControl" />
+    <input type="text" class="filter-input" [placeholder]="'car_brand' | translate" [formControl]="brandFilter" />
+    <input type="number" class="filter-input" placeholder="Min price" [formControl]="minPriceFilter" />
+    <input type="number" class="filter-input" placeholder="Max price" [formControl]="maxPriceFilter" />
+  </div>
+
+  @if (isLoading) {
+    <div class="card-grid">
+      @for (row of [1,2,3,4,5,6]; track row) {
+        <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;">
+          <div class="skeleton-row" style="height:160px;margin:0;border-radius:0;"></div>
+          <div style="padding:1rem;">
+            <div class="skeleton-row" style="height:1rem;width:60%;margin-bottom:0.5rem;"></div>
+            <div class="skeleton-row" style="height:0.75rem;width:40%;"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (!carList?.data?.length) {
+    <div class="empty-state">{{ (carList ? 'table_no_results' : 'table_no_data') | translate }}</div>
+  } @else {
+    <div class="card-grid">
+      @for (car of carList!.data; track car.id) {
+        <a [routerLink]="['/cars', car.id]" class="car-card">
+          @if (car.image_url) {
+            <img [src]="car.image_url" [alt]="car.brand + ' ' + car.model" style="width:100%;height:160px;object-fit:cover;" />
+          } @else {
+            <div class="car-card-placeholder">🚗</div>
+          }
+          <div class="car-card-body">
+            <p class="car-card-title">{{ car.brand }} {{ car.model }}</p>
+            <p class="car-card-subtitle">{{ car.year }} · {{ car.color }}</p>
+            <div class="car-card-meta">
+              <span class="badge badge-secondary">{{ car.seats }} seats</span>
+              <span class="badge badge-secondary">{{ car.transmission }}</span>
+              <span class="badge badge-secondary">{{ car.fuel_type }}</span>
+              <span [class]="car.available ? 'badge badge-success' : 'badge badge-danger'">
+                {{ (car.available ? 'car_available' : 'car_unavailable') | translate }}
+              </span>
+            </div>
+            <p class="car-card-price">{{ car.price_per_day }} / {{ 'order_days' | translate }}</p>
+          </div>
+        </a>
+      }
+    </div>
+    <div class="pagination-bar" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);">
+      <span>{{ 'table_page' | translate }} {{ carList!.current_page }} {{ 'table_of' | translate }} {{ carList!.last_page }}</span>
+      <div class="pagination-controls">
+        <button class="btn-secondary btn-sm" [disabled]="carList!.current_page === 1"
+          (click)="changePage(carList!.current_page - 1)">‹</button>
+        <button class="btn-secondary btn-sm" [disabled]="carList!.current_page === carList!.last_page"
+          (click)="changePage(carList!.current_page + 1)">›</button>
+      </div>
+    </div>
+  }
+</app-customer-layout>
