@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { IInstallment } from '../../../core/models/i-installment.model';
 import { IPagination } from '../../../core/models/i-pagination.model';
 import { CustomerInstallmentService } from '../../../core/services/customer-installment.service';
@@ -9,7 +10,7 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-installments',
   standalone: true,
-  imports: [CustomerLayoutComponent, TranslatePipe],
+  imports: [CustomerLayoutComponent, TranslatePipe, DatePipe],
   templateUrl: './installments.component.html',
 })
 export class InstallmentsComponent implements OnInit {
@@ -58,5 +59,11 @@ export class InstallmentsComponent implements OnInit {
   changePage(page: number): void {
     this.currentPage = page;
     this.fetchInstallments();
+  }
+
+  statusBadgeClass(status: string): string {
+    if (status === 'paid') return 'badge badge-success';
+    if (status === 'pending') return 'badge badge-warning';
+    return 'badge badge-danger';
   }
 }

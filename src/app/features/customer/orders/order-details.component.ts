@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IOrder } from '../../../core/models/i-order.model';
 import { CustomerOrderService } from '../../../core/services/customer-order.service';
@@ -8,7 +9,7 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-order-details',
   standalone: true,
-  imports: [RouterLink, CustomerLayoutComponent, TranslatePipe],
+  imports: [RouterLink, CustomerLayoutComponent, TranslatePipe, DatePipe],
   templateUrl: './order-details.component.html',
 })
 export class OrderDetailsComponent implements OnInit {
@@ -37,18 +38,20 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   paymentStatusBadgeClass(status: string): string {
-    if (status === 'paid') return 'badge badge-success';
-    if (status === 'partial') return 'badge badge-warning';
+    if (status === 'success') return 'badge badge-success';
+    if (status === 'pending') return 'badge badge-warning';
     return 'badge badge-danger';
   }
 
   paymentStatusKey(status: string): string {
-    if (status === 'paid') return 'order_status_paid';
-    if (status === 'partial') return 'order_status_partial';
-    return 'order_status_unpaid';
+    if (status === 'success') return 'order_status_paid';
+    if (status === 'pending') return 'order_status_unpaid';
+    return 'order_status_partial';
   }
 
   installmentStatusBadgeClass(status: string): string {
-    return status === 'paid' ? 'badge badge-success' : 'badge badge-danger';
+    if (status === 'paid') return 'badge badge-success';
+    if (status === 'pending') return 'badge badge-warning';
+    return 'badge badge-danger';
   }
 }

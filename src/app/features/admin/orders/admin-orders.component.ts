@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, debounceTime } from 'rxjs';
 import { IOrder } from '../../../core/models/i-order.model';
@@ -12,7 +13,7 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 @Component({
   selector: 'app-admin-orders',
   standalone: true,
-  imports: [ReactiveFormsModule, AdminLayoutComponent, ConfirmDialogComponent, TranslatePipe],
+  imports: [ReactiveFormsModule, AdminLayoutComponent, ConfirmDialogComponent, TranslatePipe, DatePipe],
   templateUrl: './admin-orders.component.html',
 })
 export class AdminOrdersComponent implements OnInit, OnDestroy {

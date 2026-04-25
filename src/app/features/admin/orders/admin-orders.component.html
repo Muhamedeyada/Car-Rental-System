@@ -53,8 +53,8 @@
               <td>{{ order.id }}</td>
               <td>{{ order.user?.name ?? order.user_id }}</td>
               <td>{{ order.car ? order.car.brand + ' ' + order.car.model : order.car_id }}</td>
-              <td>{{ order.delivery_date }}</td>
-              <td>{{ order.receiving_date }}</td>
+              <td>{{ order.delivery_date | date:'mediumDate' }}</td>
+              <td>{{ order.receiving_date | date:'mediumDate' }}</td>
               <td>{{ order.days }}</td>
               <td>{{ order.total_price }}</td>
               <td>{{ order.payment_type }}</td>
@@ -94,8 +94,8 @@
         <div class="detail-grid">
           <div><p class="detail-item-label">{{ 'order_user' | translate }}</p><p class="detail-item-value">{{ viewedOrder.user?.name ?? viewedOrder.user_id }}</p></div>
           <div><p class="detail-item-label">{{ 'order_car' | translate }}</p><p class="detail-item-value">{{ viewedOrder.car ? viewedOrder.car.brand + ' ' + viewedOrder.car.model : viewedOrder.car_id }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.delivery_date }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.receiving_date }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.delivery_date | date:'mediumDate' }}</p></div>
+          <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.receiving_date | date:'mediumDate' }}</p></div>
           <div><p class="detail-item-label">{{ 'order_days' | translate }}</p><p class="detail-item-value">{{ viewedOrder.days }}</p></div>
           <div><p class="detail-item-label">{{ 'order_total_price' | translate }}</p><p class="detail-item-value">{{ viewedOrder.total_price }}</p></div>
           <div><p class="detail-item-label">{{ 'order_payment_type' | translate }}</p><p class="detail-item-value">{{ viewedOrder.payment_type }}</p></div>

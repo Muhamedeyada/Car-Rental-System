@@ -16,6 +16,7 @@
           <tr>
             <th>{{ 'table_id' | translate }}</th>
             <th>{{ 'order_id' | translate }}</th>
+            <th>{{ 'order_car' | translate }}</th>
             <th>{{ 'installment_amount' | translate }}</th>
             <th>{{ 'installment_due_date' | translate }}</th>
             <th>{{ 'installment_status' | translate }}</th>
@@ -27,15 +28,16 @@
             <tr>
               <td>{{ inst.id }}</td>
               <td>#{{ inst.order_id }}</td>
+              <td>{{ inst.order?.car?.name ?? '—' }}</td>
               <td>{{ inst.amount }}</td>
-              <td>{{ inst.due_date }}</td>
+              <td>{{ inst.due_date | date:'mediumDate' }}</td>
               <td>
-                <span [class]="inst.status === 'paid' ? 'badge badge-success' : 'badge badge-danger'">
+                <span [class]="statusBadgeClass(inst.status)">
                   {{ (inst.status === 'paid' ? 'installment_status_paid' : 'installment_status_unpaid') | translate }}
                 </span>
               </td>
               <td>
-                @if (inst.status === 'unpaid') {
+                @if (inst.status !== 'paid') {
                   <button class="btn-primary btn-sm"
                     [disabled]="payingInstallmentId === inst.id"
                     (click)="payInstallment(inst)">
@@ -43,7 +45,7 @@
                     @else { {{ 'action_pay' | translate }} }
                   </button>
                 } @else {
-                  <span class="badge badge-success">✓</span>
+                  <span class="badge badge-success">{{ inst.paid_at | date:'short' }}</span>
                 }
               </td>
             </tr>

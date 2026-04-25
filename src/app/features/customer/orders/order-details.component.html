@@ -22,8 +22,8 @@
       </h1>
       <div class="detail-grid">
         <div><p class="detail-item-label">{{ 'order_car' | translate }}</p><p class="detail-item-value">{{ order.car ? order.car.brand + ' ' + order.car.model : order.car_id }}</p></div>
-        <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ order.delivery_date }}</p></div>
-        <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ order.receiving_date }}</p></div>
+        <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ order.delivery_date | date:'mediumDate' }}</p></div>
+        <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ order.receiving_date | date:'mediumDate' }}</p></div>
         <div><p class="detail-item-label">{{ 'order_days' | translate }}</p><p class="detail-item-value">{{ order.days }}</p></div>
         <div><p class="detail-item-label">{{ 'order_total_price' | translate }}</p><p class="detail-item-value" style="font-size:1.125rem;color:var(--color-primary);">{{ order.total_price }}</p></div>
         <div><p class="detail-item-label">{{ 'order_payment_type' | translate }}</p><p class="detail-item-value">{{ order.payment_type }}</p></div>
@@ -52,7 +52,7 @@
               <tr>
                 <td>{{ inst.id }}</td>
                 <td>{{ inst.amount }}</td>
-                <td>{{ inst.due_date }}</td>
+                <td>{{ inst.due_date | date:'mediumDate' }}</td>
                 <td><span [class]="installmentStatusBadgeClass(inst.status)">{{ (inst.status === 'paid' ? 'installment_status_paid' : 'installment_status_unpaid') | translate }}</span></td>
               </tr>
             }
