@@ -99,8 +99,13 @@
     <div class="modal-overlay" (click)="closeViewModal()">
       <div class="modal-box" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <span class="modal-title">{{ 'action_view' | translate }} #{{ viewedOrder.id }}</span>
-          <button class="btn-icon" (click)="closeViewModal()">✕</button>
+          <div class="modal-header-content">
+            <span class="modal-title">{{ 'action_view' | translate }}</span>
+            <p class="modal-subtitle">#{{ viewedOrder.id }}</p>
+          </div>
+          <button class="btn-icon btn-close" (click)="closeViewModal()" [title]="'action_close' | translate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
         <div class="modal-body">
           <div class="modal-detail-grid">
@@ -126,22 +131,35 @@
     <div class="modal-overlay" (click)="closeStatusModal()">
       <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <span class="modal-title">{{ 'action_update' | translate }} #{{ orderForStatusUpdate.id }}</span>
-          <button class="btn-icon" (click)="closeStatusModal()">✕</button>
+          <div class="modal-header-content">
+            <span class="modal-title">{{ 'action_update' | translate }}</span>
+            <p class="modal-subtitle">#{{ orderForStatusUpdate.id }}</p>
+          </div>
+          <button class="btn-icon btn-close" (click)="closeStatusModal()" [title]="'action_close' | translate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
         <div class="modal-body">
           <div class="form-field">
             <label class="form-label">{{ 'order_payment_status' | translate }}</label>
-            <select class="form-input" [formControl]="newPaymentStatus">
-              <option value="success">{{ 'order_status_paid' | translate }}</option>
-              <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
-            </select>
+            <div class="input-with-icon">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <select class="form-input" [formControl]="newPaymentStatus">
+                <option value="success">{{ 'order_status_paid' | translate }}</option>
+                <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button class="btn-secondary" (click)="closeStatusModal()">{{ 'action_cancel' | translate }}</button>
           <button class="btn-primary" [disabled]="isUpdatingStatus" (click)="submitStatusUpdate()">
-            @if (isUpdatingStatus) { {{ 'action_loading' | translate }} } @else { {{ 'action_update' | translate }} }
+            @if (isUpdatingStatus) { 
+              <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3"></circle></svg>
+              {{ 'action_loading' | translate }} 
+            } @else { 
+              {{ 'action_update' | translate }} 
+            }
           </button>
         </div>
       </div>
