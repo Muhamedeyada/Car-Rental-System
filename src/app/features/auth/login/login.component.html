@@ -1,0 +1,66 @@
+<app-auth-layout>
+  <h1 class="auth-title">{{ 'auth_login_title' | translate }}</h1>
+
+  @if (submitErrorKey) {
+    <div class="form-summary-error" role="alert">{{ submitErrorKey | translate }}</div>
+  }
+
+  <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+    <div class="form-field">
+      <label for="login-email" class="form-label">{{ 'auth_email' | translate }}</label>
+      <input
+        id="login-email"
+        type="email"
+        formControlName="email"
+        class="form-input"
+        [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched"
+        autocomplete="email"
+      />
+      @if (emailControl?.touched && emailControl?.errors) {
+        <p class="form-error">
+          @if (emailControl?.errors?.['server']) {
+            {{ emailControl?.errors?.['server'] }}
+          } @else if (emailControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          } @else if (emailControl?.errors?.['email']) {
+            {{ 'validation_email' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="login-password" class="form-label">{{ 'auth_password' | translate }}</label>
+      <input
+        id="login-password"
+        type="password"
+        formControlName="password"
+        class="form-input"
+        [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched"
+        autocomplete="current-password"
+      />
+      @if (passwordControl?.touched && passwordControl?.errors) {
+        <p class="form-error">
+          @if (passwordControl?.errors?.['server']) {
+            {{ passwordControl?.errors?.['server'] }}
+          } @else if (passwordControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="loginForm.invalid || isSubmitting">
+      @if (isSubmitting) {
+        {{ 'action_loading' | translate }}
+      } @else {
+        {{ 'auth_submit_login' | translate }}
+      }
+    </button>
+  </form>
+
+  <p class="auth-link-row">
+    {{ 'auth_no_account' | translate }}
+    <a routerLink="/register">{{ 'auth_register' | translate }}</a>
+  </p>
+</app-auth-layout>

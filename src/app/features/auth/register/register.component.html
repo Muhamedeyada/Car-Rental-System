@@ -1,0 +1,144 @@
+<app-auth-layout>
+  <h1 class="auth-title">{{ 'auth_register_title' | translate }}</h1>
+
+  @if (submitErrorKey) {
+    <div class="form-summary-error" role="alert">{{ submitErrorKey | translate }}</div>
+  }
+
+  <form [formGroup]="registerForm" (ngSubmit)="submitRegister()" novalidate>
+    <div class="form-field">
+      <label for="register-name" class="form-label">{{ 'auth_name' | translate }}</label>
+      <input
+        id="register-name"
+        type="text"
+        formControlName="name"
+        class="form-input"
+        [class.is-invalid]="!!nameControl?.invalid && !!nameControl?.touched"
+        autocomplete="name"
+      />
+      @if (nameControl?.touched && nameControl?.errors) {
+        <p class="form-error">
+          @if (nameControl?.errors?.['server']) {
+            {{ nameControl?.errors?.['server'] }}
+          } @else if (nameControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          } @else if (nameControl?.errors?.['minlength']) {
+            {{ 'validation_min_length' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="register-email" class="form-label">{{ 'auth_email' | translate }}</label>
+      <input
+        id="register-email"
+        type="email"
+        formControlName="email"
+        class="form-input"
+        [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched"
+        autocomplete="email"
+      />
+      @if (emailControl?.touched && emailControl?.errors) {
+        <p class="form-error">
+          @if (emailControl?.errors?.['server']) {
+            {{ emailControl?.errors?.['server'] }}
+          } @else if (emailControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          } @else if (emailControl?.errors?.['email']) {
+            {{ 'validation_email' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="register-phone" class="form-label">{{ 'auth_phone' | translate }} (optional)</label>
+      <input
+        id="register-phone"
+        type="tel"
+        formControlName="phone"
+        class="form-input"
+        [class.is-invalid]="!!phoneControl?.invalid && !!phoneControl?.touched"
+        autocomplete="tel"
+      />
+      @if (phoneControl?.touched && phoneControl?.errors?.['server']) {
+        <p class="form-error">{{ phoneControl?.errors?.['server'] }}</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="register-country" class="form-label">{{ 'auth_country' | translate }} (optional)</label>
+      <input
+        id="register-country"
+        type="text"
+        formControlName="country"
+        class="form-input"
+        [class.is-invalid]="!!countryControl?.invalid && !!countryControl?.touched"
+        autocomplete="country-name"
+      />
+      @if (countryControl?.touched && countryControl?.errors?.['server']) {
+        <p class="form-error">{{ countryControl?.errors?.['server'] }}</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="register-password" class="form-label">{{ 'auth_password' | translate }}</label>
+      <input
+        id="register-password"
+        type="password"
+        formControlName="password"
+        class="form-input"
+        [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched"
+        autocomplete="new-password"
+      />
+      @if (passwordControl?.touched && passwordControl?.errors) {
+        <p class="form-error">
+          @if (passwordControl?.errors?.['server']) {
+            {{ passwordControl?.errors?.['server'] }}
+          } @else if (passwordControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          } @else if (passwordControl?.errors?.['minlength']) {
+            {{ 'validation_min_length' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="register-password-confirmation" class="form-label">{{ 'auth_confirm_password' | translate }}</label>
+      <input
+        id="register-password-confirmation"
+        type="password"
+        formControlName="password_confirmation"
+        class="form-input"
+        [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
+        autocomplete="new-password"
+      />
+      @if (passwordConfirmationControl?.touched && passwordConfirmationControl?.errors) {
+        <p class="form-error">
+          @if (passwordConfirmationControl?.errors?.['server']) {
+            {{ passwordConfirmationControl?.errors?.['server'] }}
+          } @else if (passwordConfirmationControl?.errors?.['required']) {
+            {{ 'validation_required' | translate }}
+          } @else if (passwordConfirmationControl?.errors?.['passwordMismatch']) {
+            {{ 'validation_password_mismatch' | translate }}
+          }
+        </p>
+      }
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="registerForm.invalid || isSubmitting">
+      @if (isSubmitting) {
+        {{ 'action_loading' | translate }}
+      } @else {
+        {{ 'auth_submit_register' | translate }}
+      }
+    </button>
+  </form>
+
+  <p class="auth-link-row">
+    {{ 'auth_have_account' | translate }}
+    <a routerLink="/login">{{ 'auth_login' | translate }}</a>
+  </p>
+</app-auth-layout>
