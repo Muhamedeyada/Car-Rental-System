@@ -50,9 +50,12 @@
               <td>{{ user.wallet ?? '—' }}</td>
               <td>
                 <div class="table-actions">
-                  <button class="btn-icon btn-sm" (click)="openEditModal(user)">{{ 'action_edit' | translate }}</button>
-                  <button class="btn-icon btn-sm" style="color:var(--color-danger);border-color:var(--color-danger);"
-                    (click)="openDeleteConfirm(user)">{{ 'action_delete' | translate }}</button>
+                  <button type="button" class="btn-icon btn-icon-edit" (click)="openEditModal(user)" [title]="'action_edit' | translate">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  </button>
+                  <button type="button" class="btn-icon btn-icon-delete" (click)="openDeleteConfirm(user)" [title]="'action_delete' | translate">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -60,11 +63,17 @@
         </tbody>
       </table>
       <div class="pagination-bar">
-        <span>{{ 'table_page' | translate }} {{ userList!.current_page }} {{ 'table_of' | translate }} {{ userList!.last_page }}</span>
+        <span class="pagination-info">{{ 'table_page' | translate }} {{ userList!.current_page }} / {{ userList!.last_page }}</span>
         <div class="pagination-controls">
-          <button class="btn-secondary btn-sm" [disabled]="userList!.current_page === 1"
+          <button class="pagination-btn" [disabled]="userList!.current_page === 1"
             (click)="changePage(userList!.current_page - 1)">‹</button>
-          <button class="btn-secondary btn-sm" [disabled]="userList!.current_page === userList!.last_page"
+
+          @for (p of getPageNumbers(); track p) {
+            <button class="pagination-btn" [class.active]="p === userList!.current_page"
+              (click)="changePage(p)">{{ p }}</button>
+          }
+
+          <button class="pagination-btn" [disabled]="userList!.current_page === userList!.last_page"
             (click)="changePage(userList!.current_page + 1)">›</button>
         </div>
       </div>
@@ -78,10 +87,12 @@
           <span class="modal-title">{{ (modalMode === 'create' ? 'action_create' : 'action_edit') | translate }}</span>
           <button class="btn-icon" (click)="closeModal()">✕</button>
         </div>
-        <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" novalidate>
-          <div class="form-field">
-            <label class="form-label">{{ 'auth_name' | translate }}</label>
-            <input type="text" formControlName="name" class="form-input"
+        <div class="modal-body">
+          <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" novalidate>
+            <div class="form-grid">
+              <div class="form-field">
+            <label for="user-name" class="form-label">{{ 'auth_name' | translate }}</label>
+            <input id="user-name" type="text" formControlName="name" class="form-input"
               [class.is-invalid]="!!nameControl?.invalid && !!nameControl?.touched" />
             @if (nameControl?.touched && nameControl?.errors) {
               <p class="form-error">
@@ -92,8 +103,8 @@
             }
           </div>
           <div class="form-field">
-            <label class="form-label">{{ 'auth_email' | translate }}</label>
-            <input type="email" formControlName="email" class="form-input"
+            <label for="user-email" class="form-label">{{ 'auth_email' | translate }}</label>
+            <input id="user-email" type="email" formControlName="email" class="form-input"
               [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched" />
             @if (emailControl?.touched && emailControl?.errors) {
               <p class="form-error">
@@ -167,13 +178,15 @@
               </p>
             }
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-secondary" (click)="closeModal()">{{ 'action_cancel' | translate }}</button>
-            <button type="submit" class="btn-primary" [disabled]="userForm.invalid || isFormSubmitting">
-              @if (isFormSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'action_save' | translate }} }
-            </button>
-          </div>
-        </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" (click)="closeModal()">{{ 'action_cancel' | translate }}</button>
+              <button type="submit" class="btn-primary" [disabled]="userForm.invalid || isFormSubmitting">
+                @if (isFormSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'action_save' | translate }} }
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   }

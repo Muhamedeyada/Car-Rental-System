@@ -62,13 +62,13 @@
               <td>{{ (order.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</td>
               <td>
                 <div class="table-actions">
-                  <button class="btn-icon" (click)="openViewModal(order)" [title]="'action_view' | translate">
+                  <button type="button" class="btn-icon" (click)="openViewModal(order)" [title]="'action_view' | translate">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                   </button>
-                  <button class="btn-icon btn-icon-edit" (click)="openStatusModal(order)" [title]="'action_update' | translate">
+                  <button type="button" class="btn-icon btn-icon-edit" (click)="openStatusModal(order)" [title]="'action_update' | translate">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                   </button>
-                  <button class="btn-icon btn-icon-delete" (click)="openDeleteConfirm(order)" [title]="'action_delete' | translate">
+                  <button type="button" class="btn-icon btn-icon-delete" (click)="openDeleteConfirm(order)" [title]="'action_delete' | translate">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                   </button>
                 </div>
@@ -102,16 +102,18 @@
           <span class="modal-title">{{ 'action_view' | translate }} #{{ viewedOrder.id }}</span>
           <button class="btn-icon" (click)="closeViewModal()">✕</button>
         </div>
-        <div class="detail-grid">
-          <div><p class="detail-item-label">{{ 'order_user' | translate }}</p><p class="detail-item-value">{{ viewedOrder.user?.name ?? viewedOrder.user_id }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_car' | translate }}</p><p class="detail-item-value">{{ viewedOrder.car ? viewedOrder.car.brand + ' ' + viewedOrder.car.model : viewedOrder.car_id }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_start_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.delivery_date | date:'mediumDate' }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_end_date' | translate }}</p><p class="detail-item-value">{{ viewedOrder.receiving_date | date:'mediumDate' }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_days' | translate }}</p><p class="detail-item-value">{{ viewedOrder.days }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_total_price' | translate }}</p><p class="detail-item-value">{{ viewedOrder.total_price }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_payment_type' | translate }}</p><p class="detail-item-value">{{ viewedOrder.payment_type }}</p></div>
-          <div><p class="detail-item-label">{{ 'order_payment_status' | translate }}</p><p class="detail-item-value"><span [class]="paymentStatusBadgeClass(viewedOrder.payment_status)">{{ paymentStatusKey(viewedOrder.payment_status) | translate }}</span></p></div>
-          <div><p class="detail-item-label">{{ 'order_order_type' | translate }}</p><p class="detail-item-value">{{ (viewedOrder.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</p></div>
+        <div class="modal-body">
+          <div class="modal-detail-grid">
+            <div class="detail-block"><span class="detail-label">{{ 'order_user' | translate }}</span><span class="detail-value">{{ viewedOrder.user?.name ?? viewedOrder.user_id }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_car' | translate }}</span><span class="detail-value">{{ viewedOrder.car ? viewedOrder.car.brand + ' ' + viewedOrder.car.model : viewedOrder.car_id }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_start_date' | translate }}</span><span class="detail-value">{{ viewedOrder.delivery_date | date:'mediumDate' }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_end_date' | translate }}</span><span class="detail-value">{{ viewedOrder.receiving_date | date:'mediumDate' }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_days' | translate }}</span><span class="detail-value">{{ viewedOrder.days }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_total_price' | translate }}</span><span class="detail-value">{{ viewedOrder.total_price }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_payment_type' | translate }}</span><span class="detail-value">{{ viewedOrder.payment_type }}</span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_payment_status' | translate }}</span><span class="detail-value"><span [class]="paymentStatusBadgeClass(viewedOrder.payment_status)">{{ paymentStatusKey(viewedOrder.payment_status) | translate }}</span></span></div>
+            <div class="detail-block"><span class="detail-label">{{ 'order_order_type' | translate }}</span><span class="detail-value">{{ (viewedOrder.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</span></div>
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn-secondary" (click)="closeViewModal()">{{ 'action_close' | translate }}</button>
@@ -127,12 +129,14 @@
           <span class="modal-title">{{ 'action_update' | translate }} #{{ orderForStatusUpdate.id }}</span>
           <button class="btn-icon" (click)="closeStatusModal()">✕</button>
         </div>
-        <div class="form-field">
-          <label class="form-label">{{ 'order_payment_status' | translate }}</label>
-          <select class="form-input" [formControl]="newPaymentStatus">
-            <option value="success">{{ 'order_status_paid' | translate }}</option>
-            <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
-          </select>
+        <div class="modal-body">
+          <div class="form-field">
+            <label class="form-label">{{ 'order_payment_status' | translate }}</label>
+            <select class="form-input" [formControl]="newPaymentStatus">
+              <option value="success">{{ 'order_status_paid' | translate }}</option>
+              <option value="pending">{{ 'order_status_unpaid' | translate }}</option>
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button class="btn-secondary" (click)="closeStatusModal()">{{ 'action_cancel' | translate }}</button>

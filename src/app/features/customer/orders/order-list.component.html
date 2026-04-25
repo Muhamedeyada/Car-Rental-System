@@ -39,8 +39,8 @@
               <td><span [class]="paymentStatusBadgeClass(order.payment_status)">{{ paymentStatusKey(order.payment_status) | translate }}</span></td>
               <td>{{ (order.order_type === 'full' ? 'order_type_full' : 'order_type_installments') | translate }}</td>
               <td>
-                <a [routerLink]="['/orders', order.id]" class="btn-icon btn-sm" style="display:inline-block;text-decoration:none;">
-                  {{ 'action_view' | translate }}
+                <a [routerLink]="['/orders', order.id]" class="btn-icon" [title]="'action_view' | translate">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </a>
               </td>
             </tr>

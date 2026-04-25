@@ -3,9 +3,11 @@
     <div class="modal-header">
       <span class="modal-title">{{ 'confirm_delete_title' | translate }}</span>
     </div>
-    <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.5;">
-      {{ 'confirm_delete_message' | translate }}
-    </p>
+    <div class="modal-body">
+      <p style="color: var(--color-text-secondary); font-size: 0.9375rem; line-height: 1.6; margin: 0;">
+        {{ 'confirm_delete_message' | translate }}
+      </p>
+    </div>
     <div class="modal-footer">
       <button class="btn-secondary" (click)="cancelled.emit()">
         {{ 'confirm_no' | translate }}
