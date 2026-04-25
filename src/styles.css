@@ -326,9 +326,10 @@ html:not(.dark) .btn-primary {
 
 /* Luxury Carbon Forms */
 .form-field {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
 .form-label {
@@ -347,7 +348,7 @@ html:not(.dark) .btn-primary {
   background-color: var(--color-surface-raised);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 0.875rem 1.25rem;
+  padding: 1rem 1.5rem;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   font-size: 0.9375rem;
@@ -512,7 +513,8 @@ select.form-input {
 [dir="rtl"] .auth-title,
 [dir="rtl"] .form-label,
 [dir="rtl"] .form-error,
-[dir="rtl"] .auth-link-row {
+[dir="rtl"] .auth-link-row,
+[dir="rtl"] .form-input {
   text-align: right;
 }
 
@@ -522,8 +524,8 @@ select.form-input {
 }
 
 [dir="rtl"] .input-with-icon .form-input {
-  padding-left: 1.25rem;
-  padding-right: 3.25rem;
+  padding-left: 1.25rem !important;
+  padding-right: 3.25rem !important;
 }
 
 [dir="rtl"] .password-toggle-btn {
@@ -533,12 +535,40 @@ select.form-input {
 
 [dir="rtl"] select.form-input {
   background-position: left 1.25rem center;
-  padding-right: 1.25rem;
-  padding-left: 3.5rem;
+  padding-right: 1.5rem !important;
+  padding-left: 3.5rem !important;
+}
+
+[dir="rtl"] .modal-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .modal-header-content {
+  text-align: right;
 }
 
 [dir="rtl"] .modal-footer {
   flex-direction: row-reverse;
+}
+
+[dir="rtl"] .form-input,
+[dir="rtl"] select.form-input,
+[dir="rtl"] .input-icon,
+[dir="rtl"] .form-label,
+html[lang="ar"] .form-input,
+html[lang="ar"] select.form-input,
+html[lang="ar"] .form-label {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+[dir="rtl"] select.form-input {
+  background-position: left 1.25rem center !important;
+}
+
+[dir="rtl"] .password-toggle-btn {
+  right: auto;
+  left: 1rem;
 }
 
 [dir="rtl"] .btn-primary svg, 
@@ -783,7 +813,7 @@ select.form-input {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 650px;
+  max-width: 700px;
   max-height: 85vh;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -802,7 +832,7 @@ select.form-input {
 }
 
 .modal-header {
-  padding: 2rem 2.5rem;
+  padding: 2.25rem 3rem;
   border-bottom: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
@@ -830,19 +860,56 @@ select.form-input {
   font-weight: 500;
 }
 
+.btn-close {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface-raised) !important;
+  color: var(--color-text-secondary) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+.btn-close:hover {
+  background: var(--color-primary-soft) !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 15px var(--color-primary-soft);
+}
+
 .modal-body {
-  padding: 2.5rem;
+  padding: 3rem;
+  padding-top: 1.5rem;
   flex: 1;
   overflow-y: auto;
 }
 
 .modal-footer {
-  padding: 1.5rem 2rem;
+  padding: 2rem 3rem;
   border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  background-color: var(--color-surface-raised);
+  gap: 1.25rem;
+  background: linear-gradient(to top, var(--color-surface-raised), var(--color-surface));
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.modal-footer .btn-primary,
+.modal-footer .btn-secondary {
+  min-width: 120px;
+  justify-content: center;
+}
+  
+[dir="rtl"] .modal-footer {
+  flex-direction: row-reverse;
 }
 
 .modal-footer .btn-primary, 
@@ -882,7 +949,7 @@ select.form-input {
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 .full-width {

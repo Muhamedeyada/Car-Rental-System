@@ -126,5 +126,9 @@
   "car_fuel_petrol": "Petrol",
   "car_fuel_diesel": "Diesel",
   "car_fuel_electric": "Electric",
-  "car_fuel_hybrid": "Hybrid"
+  "car_fuel_hybrid": "Hybrid",
+  "car_create_desc": "Add a new vehicle to your fleet with all technical specifications.",
+  "car_edit_desc": "Update vehicle details, pricing, and technical information.",
+  "user_create_desc": "Register a new user and assign them a specific role.",
+  "user_edit_desc": "Modify user profile information and security settings."
 }
