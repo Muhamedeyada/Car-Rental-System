@@ -84,18 +84,28 @@
     <div class="modal-overlay" (click)="closeModal()">
       <div class="modal-box" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <span class="modal-title">{{ (modalMode === 'create' ? 'action_create' : 'action_edit') | translate }}</span>
-          <button class="btn-icon" (click)="closeModal()">✕</button>
+          <div class="modal-header-content">
+            <span class="modal-title">{{ (modalMode === 'create' ? 'action_create' : 'action_edit') | translate }}</span>
+            <p class="modal-subtitle">{{ (modalMode === 'create' ? 'user_create_desc' : 'user_edit_desc') | translate }}</p>
+          </div>
+          <button class="btn-icon" (click)="closeModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
         <div class="modal-body">
           <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" novalidate>
             <div class="form-grid">
-              <div class="form-field">
+              <div class="form-field full-width">
                 <label for="user-name" class="form-label">{{ 'auth_name' | translate }}</label>
-                <input id="user-name" type="text" formControlName="name" class="form-input"
-                  [class.is-invalid]="!!nameControl?.invalid && !!nameControl?.touched" />
+                <div class="input-with-icon">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <input id="user-name" type="text" formControlName="name" class="form-input"
+                    [placeholder]="'auth_name' | translate"
+                    [class.is-invalid]="!!nameControl?.invalid && !!nameControl?.touched" />
+                </div>
                 @if (nameControl?.touched && nameControl?.errors) {
                   <p class="form-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     @if (nameControl?.errors?.['server']) { {{ nameControl?.errors?.['server'] }} }
                     @else if (nameControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
                     @else if (nameControl?.errors?.['minlength']) { {{ 'validation_min_length' | translate }} }
@@ -105,10 +115,15 @@
 
               <div class="form-field">
                 <label for="user-email" class="form-label">{{ 'auth_email' | translate }}</label>
-                <input id="user-email" type="email" formControlName="email" class="form-input"
-                  [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched" />
+                <div class="input-with-icon">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  <input id="user-email" type="email" formControlName="email" class="form-input"
+                    [placeholder]="'auth_email' | translate"
+                    [class.is-invalid]="!!emailControl?.invalid && !!emailControl?.touched" />
+                </div>
                 @if (emailControl?.touched && emailControl?.errors) {
                   <p class="form-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     @if (emailControl?.errors?.['server']) { {{ emailControl?.errors?.['server'] }} }
                     @else if (emailControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
                     @else if (emailControl?.errors?.['email']) { {{ 'validation_email' | translate }} }
@@ -118,30 +133,43 @@
 
               <div class="form-field">
                 <label class="form-label">{{ 'user_role' | translate }}</label>
-                <select formControlName="role" class="form-input">
-                  <option value="admin">{{ 'user_role_admin' | translate }}</option>
-                  <option value="customer">{{ 'user_role_customer' | translate }}</option>
-                </select>
+                <div class="input-with-icon">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <select formControlName="role" class="form-input">
+                    <option value="admin">{{ 'user_role_admin' | translate }}</option>
+                    <option value="customer">{{ 'user_role_customer' | translate }}</option>
+                  </select>
+                </div>
               </div>
 
               <div class="form-field">
-                <label class="form-label">{{ 'auth_phone' | translate }} (optional)</label>
-                <input type="tel" formControlName="phone" class="form-input" />
+                <label class="form-label">{{ 'auth_phone' | translate }}</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <input type="tel" formControlName="phone" class="form-input" placeholder="{{ 'auth_phone' | translate }} (optional)" />
+                </div>
               </div>
 
               <div class="form-field">
-                <label class="form-label">{{ 'auth_country' | translate }} (optional)</label>
-                <input type="text" formControlName="country" class="form-input" />
+                <label class="form-label">{{ 'auth_country' | translate }}</label>
+                <div class="input-with-icon">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                  <input type="text" formControlName="country" class="form-input" placeholder="{{ 'auth_country' | translate }} (optional)" />
+                </div>
               </div>
 
               <div class="form-field">
                 <label class="form-label">
                   {{ 'auth_password' | translate }}
-                  @if (modalMode === 'edit') { <span style="color:var(--color-text-secondary);font-weight:400;"> (optional)</span> }
+                  @if (modalMode === 'edit') { <span class="optional-badge">(optional)</span> }
                 </label>
                 <div class="password-input-wrapper">
-                  <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
-                    [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched" autocomplete="new-password" />
+                  <div class="input-with-icon">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-input"
+                      [placeholder]="'auth_password' | translate"
+                      [class.is-invalid]="!!passwordControl?.invalid && !!passwordControl?.touched" autocomplete="new-password" />
+                  </div>
                   <button type="button" class="password-toggle-btn" (click)="togglePassword()">
                     @if (showPassword) {
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -152,6 +180,7 @@
                 </div>
                 @if (passwordControl?.touched && passwordControl?.errors) {
                   <p class="form-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     @if (passwordControl?.errors?.['server']) { {{ passwordControl?.errors?.['server'] }} }
                     @else if (passwordControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
                     @else if (passwordControl?.errors?.['minlength']) { {{ 'validation_min_length' | translate }} }
@@ -162,9 +191,13 @@
               <div class="form-field">
                 <label class="form-label">{{ 'auth_confirm_password' | translate }}</label>
                 <div class="password-input-wrapper">
-                  <input [type]="showPassword ? 'text' : 'password'" formControlName="password_confirmation" class="form-input"
-                    [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
-                    autocomplete="new-password" />
+                  <div class="input-with-icon">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password_confirmation" class="form-input"
+                      [placeholder]="'auth_confirm_password' | translate"
+                      [class.is-invalid]="!!passwordConfirmationControl?.invalid && !!passwordConfirmationControl?.touched"
+                      autocomplete="new-password" />
+                  </div>
                   <button type="button" class="password-toggle-btn" (click)="togglePassword()">
                     @if (showPassword) {
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -175,6 +208,7 @@
                 </div>
                 @if (passwordConfirmationControl?.touched && passwordConfirmationControl?.errors) {
                   <p class="form-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     @if (passwordConfirmationControl?.errors?.['server']) { {{ passwordConfirmationControl?.errors?.['server'] }} }
                     @else if (passwordConfirmationControl?.errors?.['required']) { {{ 'validation_required' | translate }} }
                     @else if (passwordConfirmationControl?.errors?.['passwordMismatch']) { {{ 'validation_password_mismatch' | translate }} }
@@ -182,11 +216,15 @@
                 }
               </div>
             </div>
-            </div>
             <div class="modal-footer">
               <button type="button" class="btn-secondary" (click)="closeModal()">{{ 'action_cancel' | translate }}</button>
               <button type="submit" class="btn-primary" [disabled]="userForm.invalid || isFormSubmitting">
-                @if (isFormSubmitting) { {{ 'action_loading' | translate }} } @else { {{ 'action_save' | translate }} }
+                @if (isFormSubmitting) { 
+                  <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3"></circle></svg>
+                  {{ 'action_loading' | translate }} 
+                } @else { 
+                  {{ 'action_save' | translate }} 
+                }
               </button>
             </div>
           </form>
