@@ -14,6 +14,7 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 export class OrderDetailsComponent implements OnInit {
   order: IOrder | null = null;
   isLoading = false;
+  loadError = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class OrderDetailsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
+        this.loadError = true;
       },
     });
   }

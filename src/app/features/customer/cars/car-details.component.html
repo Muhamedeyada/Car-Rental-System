@@ -13,6 +13,8 @@
         }
       </div>
     </div>
+  } @else if (loadError) {
+    <div class="error-state">{{ 'error_not_found' | translate }}</div>
   } @else if (car) {
     <div class="detail-card">
       @if (car.image_url) {

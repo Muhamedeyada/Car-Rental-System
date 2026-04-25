@@ -19,6 +19,7 @@ import { mapApiValidationErrorsToForm } from '../../../shared/utils/form-error-m
 export class CarDetailsComponent implements OnInit {
   car: ICar | null = null;
   isLoading = false;
+  loadError = false;
   orderForm: FormGroup;
   isSubmitting = false;
   submitErrorKey: string | null = null;
@@ -49,6 +50,7 @@ export class CarDetailsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
+        this.loadError = true;
       },
     });
   }

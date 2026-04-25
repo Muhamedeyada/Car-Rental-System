@@ -24,7 +24,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             toastService.showError('error_unauthorized');
           }
         }
+      } else if (error.status === 404) {
+        toastService.showError('error_not_found');
       } else if (error.status === 500) {
+        toastService.showError('error_server');
+      } else if (error.status === 0) {
         toastService.showError('error_server');
       }
 

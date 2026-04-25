@@ -13,6 +13,8 @@
         }
       </div>
     </div>
+  } @else if (loadError) {
+    <div class="error-state">{{ 'error_not_found' | translate }}</div>
   } @else if (order) {
     <div class="detail-card">
       <h1 style="font-size:1.25rem;font-weight:700;margin-bottom:1.25rem;color:var(--color-text-primary);">

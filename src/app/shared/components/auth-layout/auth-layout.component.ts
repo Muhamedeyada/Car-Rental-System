@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { ThemeService } from '../../../core/services/theme.service';
 import { TranslateService } from '../../../core/services/translate.service';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-auth-layout',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, ToastComponent],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.css',
 })
