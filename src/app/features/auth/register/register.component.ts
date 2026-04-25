@@ -18,6 +18,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   isSubmitting = false;
   submitErrorKey: string | null = null;
+  showPassword = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -59,6 +60,10 @@ export class RegisterComponent {
 
   get passwordConfirmationControl() {
     return this.registerForm.get('password_confirmation');
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   submitRegister(): void {

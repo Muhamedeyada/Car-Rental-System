@@ -17,11 +17,12 @@ export class AdminLoginComponent {
   adminLoginForm: FormGroup;
   isSubmitting = false;
   submitErrorKey: string | null = null;
+  showPassword = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {
     this.adminLoginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,6 +36,10 @@ export class AdminLoginComponent {
 
   get passwordControl() {
     return this.adminLoginForm.get('password');
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   submitAdminLogin(): void {

@@ -18,11 +18,12 @@ export class AdminRegisterComponent {
   adminRegisterForm: FormGroup;
   isSubmitting = false;
   submitErrorKey: string | null = null;
+  showPassword = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {
     this.adminRegisterForm = this.formBuilder.group(
       {
@@ -33,7 +34,7 @@ export class AdminRegisterComponent {
         password: ['', [Validators.required, Validators.minLength(8)]],
         password_confirmation: ['', [Validators.required]],
       },
-      { validators: passwordMatchValidator('password', 'password_confirmation') }
+      { validators: passwordMatchValidator('password', 'password_confirmation') },
     );
   }
 
@@ -59,6 +60,10 @@ export class AdminRegisterComponent {
 
   get passwordConfirmationControl() {
     return this.adminRegisterForm.get('password_confirmation');
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   submitAdminRegister(): void {
