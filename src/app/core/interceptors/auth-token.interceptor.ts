@@ -7,9 +7,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authService.getToken();
 
   let setHeaders: { [key: string]: string } = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'Accept': 'application/json'
   };
 
   if (token) {
