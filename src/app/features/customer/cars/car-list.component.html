@@ -1,6 +1,6 @@
 <app-customer-layout>
   <div class="page-header">
-    <h1 class="page-title">{{ 'customer_cars_title' | translate }}</h1>
+    <h1 class="page-title">Available <span>Cars</span></h1>
   </div>
 
   <div class="filters-bar">
@@ -39,7 +39,10 @@
             <div class="car-card-meta">
               <span class="badge badge-secondary">{{ car.kilometers }} KM</span>
             </div>
-            <p class="car-card-price">{{ car.price_per_day }} / {{ 'order_days' | translate }}</p>
+            <div class="car-card-price">
+              <span>${{ car.price_per_day }}</span>
+              <span>/ {{ 'order_days' | translate }}</span>
+            </div>
           </div>
         </a>
       }
